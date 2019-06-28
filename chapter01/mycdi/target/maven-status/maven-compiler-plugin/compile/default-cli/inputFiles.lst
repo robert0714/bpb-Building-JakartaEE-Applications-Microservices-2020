@@ -1,0 +1,10 @@
+/home/avbravo/NetBeansProjects/BuildingJavaEEApplicationsWithJNoSQL-Jmoordb/chapter01/mycdi/src/main/java/com/book/mycdi/controller/AnimalProcessor.java
+/home/avbravo/NetBeansProjects/BuildingJavaEEApplicationsWithJNoSQL-Jmoordb/chapter01/mycdi/src/main/java/com/book/mycdi/qualifier/Domestic.java
+/home/avbravo/NetBeansProjects/BuildingJavaEEApplicationsWithJNoSQL-Jmoordb/chapter01/mycdi/src/main/java/com/book/mycdi/controller/JsfUtil.java
+/home/avbravo/NetBeansProjects/BuildingJavaEEApplicationsWithJNoSQL-Jmoordb/chapter01/mycdi/src/main/java/com/book/mycdi/interceptor/Feed.java
+/home/avbravo/NetBeansProjects/BuildingJavaEEApplicationsWithJNoSQL-Jmoordb/chapter01/mycdi/src/main/java/com/book/mycdi/qualifier/Wild.java
+/home/avbravo/NetBeansProjects/BuildingJavaEEApplicationsWithJNoSQL-Jmoordb/chapter01/mycdi/src/main/java/com/book/mycdi/model/Bear.java
+/home/avbravo/NetBeansProjects/BuildingJavaEEApplicationsWithJNoSQL-Jmoordb/chapter01/mycdi/src/main/java/com/book/mycdi/interceptor/FeedInterceptor.java
+/home/avbravo/NetBeansProjects/BuildingJavaEEApplicationsWithJNoSQL-Jmoordb/chapter01/mycdi/src/main/java/com/book/mycdi/interceptor/FeedController.java
+/home/avbravo/NetBeansProjects/BuildingJavaEEApplicationsWithJNoSQL-Jmoordb/chapter01/mycdi/src/main/java/com/book/mycdi/model/Race.java
+/home/avbravo/NetBeansProjects/BuildingJavaEEApplicationsWithJNoSQL-Jmoordb/chapter01/mycdi/src/main/java/com/book/mycdi/model/Dog.java

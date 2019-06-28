@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title>WEB SOCKET</title>
+            </f:facet>
+            <script type="text/javascript">
+                function webSocketListener(message, channel, event) {
+                    remote();
+                    waitForLoad();
+                }
+            </script>  
+        </h:head>
+        <h:body>
+
+            <h:form id="form" prependId="false">
+                      <f:websocket channel="notification" onmessage="webSocketListener" />   
+              
+                
+                  <h:commandButton value="Socket" action="#{mySocket.pushAction()}">
+                <f:ajax />
+            </h:commandButton>
+                      <h:message id="msg"/>
+                <b:growl id="growl" globalOnly="true" placementFrom="bottom"
+                         show-detail="true" show-summary="false" allowDismiss="true"
+                         delay="10000" escape="true" />
+
+                <p:outputLabel id="count" value="#{mySocket.count}"/>
+                <p:remoteCommand 
+                    name="remote" 
+                    update=":form"
+                    actionListener="#{mySocket.actionWebSocket()}" 
+                    process="@all">
+                </p:remoteCommand>
+
+
+            </h:form>
+           
+        </h:body>
+
+    </f:view>
+</html>
