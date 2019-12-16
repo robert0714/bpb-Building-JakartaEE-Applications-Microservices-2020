@@ -1,0 +1,68 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.avbravo</groupId>
+  <artifactId>myk</artifactId>
+  <version>0.1</version>
+  <packaging>war</packaging>
+
+  <name>myk</name>
+
+  <properties>
+    <jakartaee-api.version>8.0.0</jakartaee-api.version>
+    <krazo.version>1.0.0-Beta1</krazo.version>
+    <javax.mvc-api.version>1.0-pfd</javax.mvc-api.version>
+    <junit.version>4.12</junit.version>
+  </properties>
+
+  <dependencies>
+   <dependency>
+      <groupId>jakarta.platform</groupId>
+      <artifactId>jakarta.jakartaee-web-api</artifactId>
+      <version>${jakartaee-api.version}</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>javax.mvc</groupId>
+      <artifactId>javax.mvc-api</artifactId>
+      <version>${javax.mvc-api.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.eclipse.krazo</groupId>
+      <artifactId>krazo-jersey</artifactId>
+      <version>${krazo.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>${junit.version}</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <finalName>myk</finalName>
+    <plugins>
+      <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.8.0</version>
+          <configuration>
+            <source>1.8</source>
+            <target>1.8</target>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-war-plugin</artifactId>
+          <configuration>
+            <failOnMissingWebXml>false</failOnMissingWebXml>
+          </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
