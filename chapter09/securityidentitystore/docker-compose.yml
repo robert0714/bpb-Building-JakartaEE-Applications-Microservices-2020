@@ -1,0 +1,28 @@
+version:  '3.2'
+
+services:
+  
+
+
+  document:
+    image: "mongo:latest"
+    networks:
+      - nosql
+    ports:
+      - 27017:27017
+
+
+    micro1:
+  
+     
+networks:
+  nosql:
+
+      
+      
+#  image: payara
+#  ports:
+#    - "8000:8080"
+# volumes:
+#     - ./petclinic.war:/usr/local/tomcat/webapps/petclinic.war
+#     
