@@ -15,7 +15,7 @@ import javax.interceptor.InvocationContext;
  *
  * @author avbravo
  */
-@Feed
+@Exercise
 @Interceptor
 public class Exercisenterceptor {
 
