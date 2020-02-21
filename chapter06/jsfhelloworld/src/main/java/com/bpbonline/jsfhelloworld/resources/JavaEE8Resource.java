@@ -1,4 +1,4 @@
-package com.mycompany.jsfhelloworld.resources;
+package com.bpbonline.jsfhelloworld.resources;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
