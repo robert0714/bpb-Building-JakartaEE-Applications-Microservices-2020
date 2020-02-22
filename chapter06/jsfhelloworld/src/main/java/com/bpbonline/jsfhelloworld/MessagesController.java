@@ -5,9 +5,13 @@
  */
 package com.bpbonline.jsfhelloworld;
 
+import com.avbravo.jmoordbutils.JsfUtil;
 import java.io.Serializable;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
+import lombok.Getter;
+
+import lombok.Setter;
 
 /**
  *
@@ -15,26 +19,13 @@ import javax.enterprise.context.SessionScoped;
  */
 @Named(value = "messagesController")
 @SessionScoped
+@Getter
+@Setter
 public class MessagesController implements Serializable{
     
 private String username;
 private String password;
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
 
     /**
@@ -46,10 +37,12 @@ private String password;
     public String login(){
         try {
           if(username.equals("demo") && password.equals("demo"))  {
-              JsfUtil.infoDialog("Welcome "+username);
+              JsfUtil.infoDialog("Welcome ",username);
+          }else{
+              JsfUtil.warningDialog("Wanring","Verify your data");
           }
         } catch (Exception e) {
-         JsfUtil.warningMessage(rf.getAppMessage("login.usernamenotvalid"));
+         JsfUtil.warningMessage(e.getLocalizedMessage());
         }
         return "";
     }
