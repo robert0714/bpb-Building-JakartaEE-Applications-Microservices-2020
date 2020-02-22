@@ -7,17 +7,16 @@ package com.bpbonline.jsfhelloworld;
 
 import com.avbravo.jmoordbutils.JsfUtil;
 import java.io.Serializable;
-import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
+import javax.inject.Named;
 import lombok.Getter;
-
 import lombok.Setter;
 
 /**
  *
  * @author avbravo
  */
-@Named(value = "messagesController")
+@Named
 @SessionScoped
 @Getter
 @Setter
@@ -25,8 +24,6 @@ public class MessagesController implements Serializable{
     
 private String username;
 private String password;
-
-
 
     /**
      * Creates a new instance of MessagesController
