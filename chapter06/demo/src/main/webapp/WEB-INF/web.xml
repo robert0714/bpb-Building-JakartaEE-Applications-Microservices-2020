@@ -23,7 +23,54 @@
     </welcome-file-list>
     
         
-        
+         <!--
+    -->
+    <context-param>
+        <param-name>primefaces.FONT_AWESOME</param-name>
+        <param-value>true</param-value>
+    </context-param>
+           
+    <mime-mapping>
+        <extension>ttf</extension>
+        <mime-type>css/fonts</mime-type>
+    </mime-mapping>
+    <mime-mapping>
+        <extension>otf</extension>
+        <mime-type>font/opentype</mime-type>
+    </mime-mapping>
+    <mime-mapping>
+        <extension>woff2</extension>
+        <mime-type>font/woff2</mime-type>
+    </mime-mapping>  
+    <mime-mapping>
+        <extension>woff</extension>
+        <mime-type>font/woff</mime-type>
+    </mime-mapping>  
+    <mime-mapping>
+        <extension>eot</extension>
+        <mime-type>application/vnd.ms-fontobject</mime-type>
+    </mime-mapping>
+    
+<!--    
+    <mime-mapping>
+        <extension>xhtml</extension>
+        <mime-type>application/xml</mime-type>
+    </mime-mapping>
+    -->
+    <context-param>
+        <param-name>primefaces.THEME</param-name>
+        <!--        <param-value>nova-light</param-value>
+       
+  
+       <param-value>nova-dark</param-value>
+        <param-value>nova-colored</param-value>
+     <param-value>luna-blue</param-value>
+       <param-value>luna-amber</param-value>
+       <param-value>luna-green</param-value>
+        <param-value>luna-pink</param-value>-->
+        <param-value>omega</param-value>
+
+    </context-param>
          
        <!--
      fonts
