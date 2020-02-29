@@ -28,6 +28,7 @@ public class PersonController implements Serializable{
 private String name;
 
 List<Person> personList = new ArrayList<>();
+Person personSelected = new Person();
     /**
      * Creates a new instance of MessagesController
      */
@@ -42,6 +43,9 @@ List<Person> personList = new ArrayList<>();
         } catch (Exception e) {
             JsfUtil.errorDialog("test", e.getLocalizedMessage());
         }
+        return "";
+    }
+    public String show(){
         return "";
     }
 }
