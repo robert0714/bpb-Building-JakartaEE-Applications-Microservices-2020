@@ -7,7 +7,8 @@ package com.bpbonline.jsfhelloworld.services;
 
 import com.avbravo.jmoordb.mongodb.history.services.ErrorInfoServices;
 import com.avbravo.jmoordb.util.JmoordbUtil;
-import com.bpbonline.jsfhelloworld.entity.Rol;
+
+import com.bpbonline.jsfhelloworld.entity.Role;
 import com.bpbonline.jsfhelloworld.repository.RoleRepository;
 import com.bpbonline.jsfhelloworld.repository.UserRepository;
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ import org.bson.Document;
  * @authoravbravo
  */
 @Stateless
-public class RolServices {
+public class RoleServices {
 
  @Inject
     ErrorInfoServices errorServices;
@@ -33,10 +34,10 @@ public class RolServices {
 
     @Inject
     UserRepository usuarioRepository;
-    List<Rol> rolList = new ArrayList<>();
+    List<Role> roleList = new ArrayList<>();
 
-    public List<Rol> complete(String query) {
-        List<Rol> suggestions = new ArrayList<>();
+    public List<Role> complete(String query) {
+        List<Role> suggestions = new ArrayList<>();
         try {
             suggestions = repository.complete(query);
         } catch (Exception e) {
@@ -46,8 +47,8 @@ public class RolServices {
         return suggestions;
     }
 
-    public List<Rol> completeFiltrado(String query) {
-        List<Rol> suggestions = new ArrayList<>();
+    public List<Role> completeFilter(String query) {
+        List<Role> suggestions = new ArrayList<>();
         try {
             query = query.trim();
             if (query.length() < 1) {
@@ -63,24 +64,24 @@ public class RolServices {
     }
 
     // <editor-fold defaultstate="collapsed" desc="getRolList()">
-    public List<Rol> getRolList() {
+    public List<Role> getRolList() {
         try {
-            rolList = repository.findAll(new Document("rol", 1));
+            roleList = repository.findAll(new Document("rol", 1));
         } catch (Exception e) {
              errorServices.errorMessage(JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(),e); 
         }
-        return rolList;
+        return roleList;
     }// </editor-fold>
 
-    public void setRolList(List<Rol> rolList) {
-        this.rolList = rolList;
+    public void setRolList(List<Role> roleList) {
+        this.roleList = roleList;
     }
 
     // <editor-fold defaultstate="collapsed" desc="isDeleted(Rol rol)">
-    public Boolean isDeleted(Rol rol) {
+    public Boolean isDeleted(Role role) {
         Boolean found = false;
         try {
-            Document doc = new Document("rol.idrol", rol.getIdrol());
+            Document doc = new Document("rol.idrol", role.getIdrole());
             Integer count = usuarioRepository.count(doc);
             if (count > 0) {
                 return false;
@@ -93,12 +94,12 @@ public class RolServices {
     }  // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="findById(String id)">
-    public Rol findById(String id) {
-        Rol rol = new Rol();
+    public Role findById(String id) {
+        Role role = new Role();
         try {
 
-            rol.setIdrol(id);
-            Optional<Rol> optional = repository.findById(rol);
+            role.setIdrole(id);
+            Optional<Role> optional = repository.findById(role);
             if (optional.isPresent()) {
                 return optional.get();
             }
@@ -106,7 +107,7 @@ public class RolServices {
              errorServices.errorMessage(JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(),e);  
         }
 
-        return rol;
+        return role;
     }
     // </editor-fold>
 }

@@ -85,11 +85,11 @@
                                                  field="idunidad"
                                                  />
 
-                        <p:outputLabel  value="#{msg['field.rol']}" />
-                        <jmoordbjsf:autocomplete converter="#{rolConverter}"
+                        <p:outputLabel  value="#{msg['field.role']}" />
+                        <jmoordbjsf:autocomplete converter="#{roleConverter}"
                                                  completeMethod="#{usuarioController.completeFiltrado}"
-                                                 labeltip1="#{msg['field.idrol']} #{p.idrol}"
-                                                 labeltip2="#{msg['field.rol']} #{p.rol}"   
+                                                 labeltip1="#{msg['field.idrole']} #{p.idrol}"
+                                                 labeltip2="#{msg['field.role']} #{p.rol}"   
                                                  listener="#{usuarioController.handleSelect}"
                                                  value="#{usuarioController.rolList}"
                                                  itemLabel="#{p.idrol}"

@@ -15,6 +15,12 @@ public class Role {
     @Embedded
     List<UserInfo> userInfo;
 
+    public Role() {
+    }
+
+    
+    
+    
     public Role(String idrole, String role, String activo, List<UserInfo> userInfo) {
         this.idrole = idrole;
         this.role = role;
