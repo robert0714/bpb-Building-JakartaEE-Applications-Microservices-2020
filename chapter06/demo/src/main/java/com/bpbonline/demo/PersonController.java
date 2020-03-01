@@ -7,6 +7,8 @@ package com.bpbonline.demo;
 
 import com.avbravo.jmoordbutils.JsfUtil;
 import java.io.Serializable;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.view.ViewScoped;
@@ -36,8 +38,7 @@ Person personSelected = new Person();
     }
     
     public String save(){
-        try {
-
+        try{ 
             Person person = new Person(name);
             personList.add(person);
         } catch (Exception e) {

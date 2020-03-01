@@ -10,7 +10,7 @@
     <h:body>
         <h:form id="form" prependId="false">
             <p:growl id="growl" />
-                <p:calendar id="inline" mode="inline" />
+            <p:calendar id="inline" mode="inline" />
             <p:panelGrid columns="2">
                 <p:outputLabel value="name"/>
                 <p:inputText value="#{personController.name}"/>
@@ -22,34 +22,28 @@
                 <p:column headerText="name">
                     <p:outputLabel value="#{item.name}"/>
                 </p:column>
-                
-                   <p:column headerText="">
-                        <p:commandButton   action= "#{personController.show}"
-                                           update=":form:outputPanelPerson, :form:growl"
-                                           oncomplete="PF('personDialog').show()"  icon="fa fa-print" >
-                            <f:setPropertyActionListener value="#{item}" target="#{personController.personSelected}" />
-                        </p:commandButton>
-
-              </p:column>
-
+                <p:column headerText="">
+                    <p:commandButton   action= "#{personController.show}"
+                                       update=":form:outputPanelPerson, :form:growl"
+                                       oncomplete="PF('personDialog').show()"  icon="fa fa-print" >
+                        <f:setPropertyActionListener value="#{item}" target="#{personController.personSelected}" />
+                    </p:commandButton>
+                </p:column>
             </p:dataTable>
 
-            
-             <p:dialog header="Person" widgetVar="personDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="true">
+
+            <p:dialog header="Person" widgetVar="personDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="true">
                 <p:outputPanel id="outputPanelPerson" style="text-align:center;">
                     <p:panelGrid columns="2">
-                        
-                
-                            <p:outputLabel value="name" />
-                      
-                            <p:outputLabel value="#{personController.personSelected.name}" />
-                   
+                        <p:outputLabel value="name" />
+                        <p:outputLabel value="#{personController.personSelected.name}" />
                     </p:panelGrid>
                 </p:outputPanel>
-             </p:dialog>
+            </p:dialog>
 
         </h:form>
 
+    
     </h:body>
 </html>
 
