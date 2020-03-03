@@ -7,7 +7,7 @@ package com.bpbonline.jsfhelloworld.converter;
 
 import com.avbravo.jmoordb.mongodb.history.services.ErrorInfoServices;
 import com.avbravo.jmoordb.util.JmoordbUtil;
-import com.bpbonline.jsfhelloworld.entity.Rol;
+import com.bpbonline.jsfhelloworld.entity.Role;
 import com.bpbonline.jsfhelloworld.repository.RoleRepository;
 import java.util.Optional;
 import javax.enterprise.context.RequestScoped;
@@ -23,7 +23,7 @@ import javax.inject.Named;
  */
 @Named
 @RequestScoped
-public class RolConverter implements Converter {
+public class RoleConverter implements Converter {
  @Inject
     ErrorInfoServices errorServices;
     @Inject
@@ -31,20 +31,20 @@ public class RolConverter implements Converter {
 
     @Override
     public Object getAsObject(FacesContext facesContext, UIComponent uiComponent, String s) {
-        Rol rol = new Rol();
+        Role role = new Role();
         try{
             if(!s.equals("null")){
-               Rol b = new Rol();
-               b.setIdrol(s);
-               Optional<Rol> optional = rolRepository.findById(b);
+               Role b = new Role();
+               b.setIdrole(s);
+               Optional<Role> optional = rolRepository.findById(b);
                if (optional.isPresent()) {
-               rol= optional.get();  
+               role= optional.get();  
                }   
              }
           } catch (Exception e) {
               errorServices.errorMessage(JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(),e);
           }
-          return rol;
+          return role;
       }
 
 
@@ -52,9 +52,9 @@ public class RolConverter implements Converter {
     public String getAsString(FacesContext facesContext, UIComponent uiComponent, Object o) {
         String r = "";
         try {
-            if (o instanceof Rol) {
-                Rol rol = (Rol) o;
-                r = String.valueOf(rol.getIdrol());
+            if (o instanceof Role) {
+                Role role = (Role) o;
+                r = String.valueOf(role.getIdrole());
             }else if (o instanceof String) {
                r = (String) o;
             }
