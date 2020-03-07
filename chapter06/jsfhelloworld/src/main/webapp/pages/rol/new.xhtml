@@ -26,9 +26,9 @@
             <h:panelGroup id="content" layout="block"> 
 
                 <jmoordbjsf:messages id="msg"/>
-                <jmoordbjsf:toolbarnew label="#{msg['field.idrol']}"
-                                       title="#{msg['titleview.rol']}"
-                                       value="#{rolController.rol.idrol}"
+                <jmoordbjsf:toolbarnew label="#{msg['field.idrolw']}"
+                                       title="#{msg['titleview.rolw']}"
+                                       value="#{rolController.rol.idrolw}"
                                        disabled="#{rolController.writable}"
                                        rendererList="#{p:ifGranted('ADMINISTRADOR')}"
                                        controller="#{rolController}"                                       
