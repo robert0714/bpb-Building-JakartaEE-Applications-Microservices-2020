@@ -16,10 +16,12 @@ public class User {
     @Size(min = 8, max = 250)
     private String name;
 
-    @Referenced(collection = "Rol",
-            field = "idrole", javatype = "String", lazy = false,
-            repository = "com.bpbonline.jsfhelloworld.repository.RoleRepository")
-    private List<Role> role;
+    @Referenced(collection = "Profiles",
+            field = "idprofile", javatype = "String", lazy = false,
+            repository = "com.bpbonline.jsfhelloworld.repository.ProfilesRepository")
+    private List<Profiles> profiles;
+    
+    private String active;
 
     @Embedded
     List<UserInfo> userInfo;
@@ -28,14 +30,28 @@ public class User {
         
     }
 
-    public User(String username, String password, String name, List<Role> role, List<UserInfo> userInfo) {
+    public User(String username, String password, String name, List<Profiles> profiles, String active, List<UserInfo> userInfo) {
         this.username = username;
         this.password = password;
         this.name = name;
-        this.role = role;
+        this.profiles = profiles;
+        this.active = active;
         this.userInfo = userInfo;
     }
 
+    
+    
+    
+    
+    public String getActive() {
+        return active;
+    }
+
+    public void setActive(String active) {
+        this.active = active;
+    }
+
+   
     public String getUsername() {
         return username;
     }
@@ -60,12 +76,12 @@ public class User {
         this.name = name;
     }
 
-    public List<Role> getRole() {
-        return role;
+    public List<Profiles> getProfiles() {
+        return profiles;
     }
 
-    public void setRole(List<Role> role) {
-        this.role = role;
+    public void setProfiles(List<Profiles> profiles) {
+        this.profiles = profiles;
     }
 
     public List<UserInfo> getUserInfo() {
@@ -75,8 +91,10 @@ public class User {
     public void setUserInfo(List<UserInfo> userInfo) {
         this.userInfo = userInfo;
     }
+
     
     
+   
     
 
 }

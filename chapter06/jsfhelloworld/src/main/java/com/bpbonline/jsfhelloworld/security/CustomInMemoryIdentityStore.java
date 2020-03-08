@@ -9,7 +9,7 @@ import com.avbravo.jmoordb.configuration.JmoordbContext;
 import com.avbravo.jmoordbutils.JsfUtil;
 
 import com.avbravo.jmoordbutils.JmoordbResourcesFiles;
-import com.bpbonline.jsfhelloworld.entity.Rol;
+import com.bpbonline.jsfhelloworld.entity.Profiles;
 import com.bpbonline.jsfhelloworld.entity.User;
 import com.bpbonline.jsfhelloworld.repository.UserRepository;
 import java.util.Arrays;
@@ -29,7 +29,7 @@ import javax.security.enterprise.identitystore.IdentityStore;
 @ApplicationScoped
 public class CustomInMemoryIdentityStore implements IdentityStore {
 
-    private String rolValue = "";
+    private String profileValue = "";
     @Inject
     JmoordbResourcesFiles rf;
     @Inject
@@ -45,7 +45,7 @@ public class CustomInMemoryIdentityStore implements IdentityStore {
         if (!isValidUser(username, password)) {
             return CredentialValidationResult.NOT_VALIDATED_RESULT;
         }
-        return new CredentialValidationResult(rolValue, new HashSet<>(Arrays.asList(rolValue)));
+        return new CredentialValidationResult(profileValue, new HashSet<>(Arrays.asList(profileValue)));
 
     }
 
@@ -56,32 +56,32 @@ public class CustomInMemoryIdentityStore implements IdentityStore {
             if (!isValidData(username, password)) {
                 return false;
             }
-            User usuario = new User();
-            usuario.setUsername(username);
+            User user = new User();
+            user.setUsername(username);
 
-            Rol rol = (Rol) JmoordbContext.get("jmoordb_rol");
-//Asigna el rol del usuario
-            this.rolValue = rol.getIdrol();
+           Profiles profiles = (Profiles) JmoordbContext.get("jmoordb_profiles");
+//Assign the user profile
+            this.profileValue = profiles.getIdprofile();
 
             //-----------------
-            usuario.setUsername(username);
+            user.setUsername(username);
 
-            Optional<User> optional = usuarioRepository.findById(usuario);
+            Optional<User> optional = usuarioRepository.findById(user);
             if (!optional.isPresent()) {
                 JsfUtil.warningMessage(rf.getAppMessage("login.usernamenotvalid"));
                 return false;
             } else {
                 User u2 = optional.get();
 
-                usuario = u2;
+                user = u2;
                 //guarda el usuario logeado
-                JmoordbContext.put("jmoordb_user", usuario);
+                JmoordbContext.put("jmoordb_user", user);
 
-                if (!JsfUtil.desencriptar(usuario.getPassword()).equals(password)) {
+                if (!JsfUtil.desencriptar(user.getPassword()).equals(password)) {
                     JsfUtil.successMessage(rf.getAppMessage("login.passwordnotvalid"));
                     return false;
                 }
-                if (usuario.getActivo().equals("no")) {
+                if (user.getActive().equals("no")) {
                     JsfUtil.successMessage(rf.getAppMessage("login.usuarioinactivo"));
                     return false;
                 }
@@ -89,14 +89,14 @@ public class CustomInMemoryIdentityStore implements IdentityStore {
             
 
                 //Valida los roles del usuario si coincide con el seleccionado
-                Boolean foundrol = false;
-                for (Rol r : usuario.getRol()) {
-                    if (rol.getIdrol().equals(r.getIdrol())) {
-                        foundrol = true;
+                Boolean foundprofile = false;
+                for (Profiles p : user.getProfiles()) {
+                    if (profiles.getIdprofile().equals(p.getIdprofile())) {
+                        foundprofile = true;
                     }
                 }
-                if (!foundrol) {
-                    JsfUtil.successMessage(rf.getAppMessage("login.notienerolenelsistema") + " " + rol.getIdrol());
+                if (!foundprofile) {
+                    JsfUtil.successMessage("No profile assigned");
                     return false;
                 }
                 return true;

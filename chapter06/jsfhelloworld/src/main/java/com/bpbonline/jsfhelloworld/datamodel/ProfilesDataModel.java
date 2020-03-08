@@ -5,7 +5,7 @@
 */
 package com.bpbonline.jsfhelloworld.datamodel;
 
-import com.bpbonline.jsfhelloworld.entity.Role;
+import com.bpbonline.jsfhelloworld.entity.Profiles;
 import java.util.List;
 import javax.faces.model.ListDataModel;
 import org.primefaces.model.SelectableDataModel;
@@ -14,27 +14,27 @@ import org.primefaces.model.SelectableDataModel;
  *
  * @author avbravo
  */
-public class RoleDataModel extends ListDataModel<Role> implements SelectableDataModel<Role>{
+public class ProfilesDataModel extends ListDataModel<Profiles> implements SelectableDataModel<Profiles>{
 
-    public RoleDataModel() {
+    public ProfilesDataModel() {
     }
-    public RoleDataModel(List<Role>data) {
+    public ProfilesDataModel(List<Profiles>data) {
         super(data);
     }
 
     @Override
-    public Role  getRowData(String rowKey) {
-        List<Role> roleList = (List<Role>) getWrappedData();
-        for (Role role : roleList) {
-             if (role.getIdrole().equals(rowKey)) {
+    public Profiles  getRowData(String rowKey) {
+        List<Profiles> roleList = (List<Profiles>) getWrappedData();
+        for (Profiles role : roleList) {
+             if (role.getIdprofile().equals(rowKey)) {
                  return role;
              }
         }
         return null;
      }
      @Override
-     public Object getRowKey(Role role) {
-         return role.getIdrole();
+     public Object getRowKey(Profiles role) {
+         return role.getIdprofile();
      }
 
 

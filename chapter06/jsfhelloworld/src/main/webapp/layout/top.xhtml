@@ -28,9 +28,9 @@
 
 
 
-  <b:dropMenu value="#{msg['menubar.administracion']}"  rendered="#{p:ifGranted('ADMIN')}">
-                    <b:navLink value="#{msg['menu.usuario']}"  outcome="/pages/usuario/list" icon="user"  />
-                    <b:navLink value="#{msg['menu.rol']}"  outcome="/pages/rol/list" iconAwesome="desktop"  />
+  <b:dropMenu value="#{msg['menubar.setup']}"  rendered="#{p:ifGranted('ADMIN')}">
+                    <b:navLink value="#{msg['menu.user']}"  outcome="/pages/user/list" icon="user"  />
+                    <b:navLink value="#{msg['menu.profiles']}"  outcome="/pages/profiles/list" iconAwesome="desktop"  />
                
 
 

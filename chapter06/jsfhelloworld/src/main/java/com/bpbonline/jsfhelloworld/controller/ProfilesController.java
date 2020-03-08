@@ -19,11 +19,14 @@ import com.avbravo.jmoordbutils.DateUtil;
 import com.avbravo.jmoordbutils.JmoordbResourcesFiles;
 import com.avbravo.jmoordbutils.JsfUtil;
 import com.avbravo.jmoordbutils.ReportUtils;
-import com.bpbonline.jsfhelloworld.datamodel.RolDataModel;
-import com.bpbonline.jsfhelloworld.entity.Rol;
+import com.bpbonline.jsfhelloworld.datamodel.ProfilesDataModel;
+import com.bpbonline.jsfhelloworld.entity.Profiles;
+
+
 import com.bpbonline.jsfhelloworld.entity.User;
-import com.bpbonline.jsfhelloworld.repository.RoleRepository;
-import com.bpbonline.jsfhelloworld.services.RolServices;
+import com.bpbonline.jsfhelloworld.repository.ProfilesRepository;
+import com.bpbonline.jsfhelloworld.services.ProfilesServices;
+
 import com.bpbonline.jsfhelloworld.services.UsuarioServices;
 import com.lowagie.text.Element;
 import com.lowagie.text.Font;
@@ -58,32 +61,32 @@ import org.primefaces.event.SelectEvent;
 @ViewScoped
 @Getter
 @Setter
-public class RolController implements Serializable, IController {
+public class ProfilesController implements Serializable, IController {
 
 // <editor-fold defaultstate="collapsed" desc="fields">  
     private static final long serialVersionUID = 1L;
 
     private Boolean writable = false;
     //DataModel
-    private RolDataModel rolDataModel;
+    private ProfilesDataModel profilesDataModel;
 
     Integer page = 1;
     Integer rowPage = 25;
     List<Integer> pages = new ArrayList<>();
 
     //Entity
-    Rol rol = new Rol();
-    Rol rolSelected;
-    Rol rolSearch = new Rol();
+    Profiles profiles = new Profiles();
+   Profiles profilesSelected;
+   Profiles profilesSearch = new Profiles();
 
     //List
-    List<Rol> rolList = new ArrayList<>();
+    List<Profiles> profilesList = new ArrayList<>();
 
     // </editor-fold>  
     // <editor-fold defaultstate="collapsed" desc="reposisitory">
     //Repository
     @Inject
-    RoleRepository rolRepository;
+    ProfilesRepository profilesRepository;
 
     @Inject
     JmoordbResourcesFiles rf;
@@ -103,7 +106,7 @@ public class RolController implements Serializable, IController {
     @Inject
     ErrorInfoServices errorServices;
     @Inject
-    RolServices rolServices;
+    ProfilesServices profilesServices;
     @Inject
     @Push(channel = "notification")
     private PushContext push;
@@ -114,12 +117,12 @@ public class RolController implements Serializable, IController {
 // <editor-fold defaultstate="collapsed" desc="getter/setter">
     public List<Integer> getPages() {
 
-        return rolRepository.listOfPage(rowPage);
+        return profilesRepository.listOfPage(rowPage);
     }
 
     // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="constructor">
-    public RolController() {
+    public ProfilesController() {
     }
 
     // </editor-fold>
@@ -137,9 +140,9 @@ public class RolController implements Serializable, IController {
 
             JmoordbControllerEnvironment jmc = new JmoordbControllerEnvironment.Builder()
                     .withController(this)
-                    .withRepository(rolRepository)
-                    .withEntity(rol)
-                    .withService(rolServices)
+                    .withRepository(profilesRepository)
+                    .withEntity(profiles)
+                    .withService(profilesServices)
                     .withNameFieldOfPage("page")
                     .withNameFieldOfRowPage("rowPage")
                     .withTypeKey("primary")
@@ -198,53 +201,53 @@ public class RolController implements Serializable, IController {
     public void move(Integer page) {
         try {
             this.page = page;
-            rolDataModel = new RolDataModel(rolList);
+            profilesDataModel = new ProfilesDataModel(profilesList);
             Document doc;
 
             switch (getSearch()) {
                 case "_init":
-                    rolList = rolRepository.findPagination(page, rowPage);
+                  profilesList  = profilesRepository.findPagination(page, rowPage);
                     break;
                 case "_autocomplete":
                     break;
 
                 case "idrol":
                     if (getValueSearch() != null) {
-                        rolSearch.setIdrol(getValueSearch().toString());
-                        doc = new Document("idrol", rolSearch.getIdrol());
-                        rolList = rolRepository.findPagination(doc, page, rowPage, new Document("idrol", -1));
+                        profilesSearch.setIdprofile(getValueSearch().toString());
+                        doc = new Document("idrol", profilesSearch.getIdprofile());
+                       profilesList = profilesRepository.findPagination(doc, page, rowPage, new Document("idprofile", -1));
                     } else {
-                        rolList = rolRepository.findPagination(page, rowPage);
+                       profilesList =profilesRepository.findPagination(page, rowPage);
                     }
 
                     break;
 
                 case "rol":
                     if (getValueSearch() != null) {
-                        rolSearch.setRol(getValueSearch().toString());
-                        rolList = rolRepository.findRegexInTextPagination("rol", rolSearch.getRol(), true, page, rowPage, new Document("rol", -1));
+                       profilesSearch.setProfile(getValueSearch().toString());
+                      profilesList = profilesRepository.findRegexInTextPagination("profile", profilesSearch.getProfile(), true, page, rowPage, new Document("profile", -1));
 
                     } else {
-                        rolList = rolRepository.findPagination(page, rowPage);
+                       profilesList = profilesRepository.findPagination(page, rowPage);
                     }
 
                     break;
                 case "activo":
                     if (getValueSearch() != null) {
-                        rolSearch.setActivo(getValueSearch().toString());
-                        doc = new Document("activo", rolSearch.getActivo());
-                        rolList = rolRepository.findPagination(doc, page, rowPage, new Document("idrol", -1));
+                        profilesSearch.setActive(getValueSearch().toString());
+                        doc = new Document("activo", profilesSearch.getActive());
+                       profilesList = profilesRepository.findPagination(doc, page, rowPage, new Document("idprofile", -1));
                     } else {
-                        rolList = rolRepository.findPagination(page, rowPage);
+                      profilesList = profilesRepository.findPagination(page, rowPage);
                     }
                     break;
 
                 default:
-                    rolList = rolRepository.findPagination(page, rowPage);
+                   profilesList = profilesRepository.findPagination(page, rowPage);
                     break;
             }
 
-            rolDataModel = new RolDataModel(rolList);
+            profilesDataModel = new ProfilesDataModel(profilesList);
 
         } catch (Exception e) {
             errorServices.errorMessage(nameOfClass(), nameOfMethod(), e.getLocalizedMessage(), e);
@@ -256,7 +259,7 @@ public class RolController implements Serializable, IController {
     // <editor-fold defaultstate="collapsed" desc="Boolean beforeDelete()">
     @Override
     public Boolean beforeDelete() {
-        Boolean delete = rolServices.isDeleted(rol);
+        Boolean delete = profilesServices.isDeleted(profiles);
         if (!delete) {
             JsfUtil.warningDialog(rf.getMessage("warning.advertencia"), rf.getMessage("warning.nosepuedeeliminarrol"));
         }
@@ -267,7 +270,7 @@ public class RolController implements Serializable, IController {
     // <editor-fold defaultstate="collapsed" desc="Boolean beforeDeleteFromListXhtml()">
     @Override
     public Boolean beforeDeleteFromListXhtml() {
-        Boolean delete = rolServices.isDeleted(rol);
+        Boolean delete = profilesServices.isDeleted(profiles);
         if (!delete) {
             JsfUtil.warningDialog(rf.getMessage("warning.advertencia"), rf.getMessage("warning.nosepuedeeliminarrol"));
         }
@@ -310,11 +313,11 @@ public class RolController implements Serializable, IController {
             table.addCell(ReportUtils.PdfCell("Rol", FontFactory.getFont("arial", 11, Font.BOLD), Element.ALIGN_CENTER));
             table.addCell(ReportUtils.PdfCell("Activo", FontFactory.getFont("arial", 11, Font.BOLD), Element.ALIGN_CENTER));
 
-            for (Rol r : rolList) {
+            for (Profiles r : profilesList) {
 
-                table.addCell(ReportUtils.PdfCell(r.getIdrol(), FontFactory.getFont("arial", 10, Font.NORMAL)));
-                table.addCell(ReportUtils.PdfCell(r.getRol(), FontFactory.getFont("arial", 9, Font.NORMAL)));
-                table.addCell(ReportUtils.PdfCell(r.getActivo(), FontFactory.getFont("arial", 10, Font.NORMAL)));
+                table.addCell(ReportUtils.PdfCell(r.getIdprofile(), FontFactory.getFont("arial", 10, Font.NORMAL)));
+                table.addCell(ReportUtils.PdfCell(r.getProfile(), FontFactory.getFont("arial", 9, Font.NORMAL)));
+                table.addCell(ReportUtils.PdfCell(r.getActive(), FontFactory.getFont("arial", 10, Font.NORMAL)));
 
             }
             document.add(table);
@@ -351,9 +354,9 @@ public class RolController implements Serializable, IController {
             document.add(ReportUtils.paragraph("Fecha: " + date, FontFactory.getFont("arial", 8, Font.BOLD), Element.ALIGN_RIGHT));
             document.add(new Paragraph("\n"));
 
-            document.add(ReportUtils.paragraph("Id: " + rol.getIdrol(), FontFactory.getFont("arial", 12, Font.NORMAL), Element.ALIGN_JUSTIFIED));
-            document.add(ReportUtils.paragraph("Rol: " + rol.getIdrol(), FontFactory.getFont("arial", 12, Font.NORMAL), Element.ALIGN_JUSTIFIED));
-            document.add(ReportUtils.paragraph("Activo: " + rol.getActivo(), FontFactory.getFont("arial", 12, Font.NORMAL), Element.ALIGN_JUSTIFIED));
+            document.add(ReportUtils.paragraph("Id: " + profiles.getIdprofile(), FontFactory.getFont("arial", 12, Font.NORMAL), Element.ALIGN_JUSTIFIED));
+            document.add(ReportUtils.paragraph("Profile: " + profiles.getProfile(), FontFactory.getFont("arial", 12, Font.NORMAL), Element.ALIGN_JUSTIFIED));
+            document.add(ReportUtils.paragraph("Active: " + profiles.getActive(), FontFactory.getFont("arial", 12, Font.NORMAL), Element.ALIGN_JUSTIFIED));
 
         } catch (Exception e) {
             errorServices.errorMessage(nameOfClass(), nameOfMethod(), e.getLocalizedMessage(), e);

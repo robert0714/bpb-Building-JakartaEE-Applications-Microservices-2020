@@ -23,28 +23,28 @@ import javax.inject.Named;
  */
 @Named
 @RequestScoped
-public class UsuarioConverter implements Converter {
+public class UserConverter implements Converter {
  @Inject
     ErrorInfoServices errorServices;
     @Inject
-    UserRepository usuarioRepository;
+    UserRepository userRepository;
 
     @Override
     public Object getAsObject(FacesContext facesContext, UIComponent uiComponent, String s) {
-        User usuario = new User();
+        User user = new User();
         try{
             if(!s.equals("null")){
                User b = new User();
                b.setUsername(s);
-               Optional<User> optional = usuarioRepository.findById(b);
+               Optional<User> optional = userRepository.findById(b);
                if (optional.isPresent()) {
-               usuario= optional.get();  
+               user= optional.get();  
                }   
              }
           } catch (Exception e) {
               errorServices.errorMessage(JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(),e);  
           }
-          return usuario;
+          return user;
       }
 
 
@@ -53,8 +53,8 @@ public class UsuarioConverter implements Converter {
         String r = "";
         try {
             if (o instanceof User) {
-                User usuario = (User) o;
-                r = String.valueOf(usuario.getUsername());
+                User user = (User) o;
+                r = String.valueOf(user.getUsername());
             }else if (o instanceof String) {
                r = (String) o;
             }

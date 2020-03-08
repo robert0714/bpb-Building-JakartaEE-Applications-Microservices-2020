@@ -19,38 +19,38 @@
             }
         </style>
 
-        <b:form id="form"  prependId="false"  rendered="#{p:ifGranted('ADMINISTRADOR')}" onkeypress="if (event.keyCode == 13) {
+        <b:form id="form"  prependId="false"  rendered="#{p:ifGranted('ADMIN')}" onkeypress="if (event.keyCode == 13) {
                     return false;
                 }">
 
             <b:growl  id="msgs"/>
 
-            <b:panel collapsible="false" title="#{msg['titlelist.usuario']}" id="content"   look="primary" > 
+            <b:panel collapsible="false" title="#{msg['titlelist.user']}" id="content"   look="primary" > 
                 <!--<b:panelGrid colSpans="2,10" size="xs">--> 
                 <b:panelGrid colSpans="1,4,1,6"  columns="4" size="xs"> 
 
 
 
                     <p:outputLabel value="#{msg['field.username']}"/>
-                    <jmoordbjsf:autocomplete converter="#{usuarioConverter}"
-                                             completeMethod="#{usuarioController.usuarioServices.complete}"
+                    <jmoordbjsf:autocomplete converter="#{userConverter}"
+                                             completeMethod="#{userController.userServices.complete}"
                                              labeltip1="#{msg['field.username']} #{p.username}"
-                                             labeltip2="#{msg['field.nombre']} #{p.nombre}"   
-                                             listener="#{usuarioController.handleAutocompleteOfListXhtml}"
-                                             value="#{usuarioController.usuarioSearch}"
+                                             labeltip2="#{msg['field.name']} #{p.name}"   
+                                             listener="#{userController.handleAutocompleteOfListXhtml}"
+                                             value="#{userController.userSearch}"
                                              itemLabel=" #{p.username}"
                                              field="username"
                                              update=" :form:dataTable"/>
 
-                    <p:outputLabel value="#{msg['field.nombre']}"/>
-                    <jmoordbjsf:autocomplete converter="#{usuarioConverter}"
-                                             completeMethod="#{usuarioController.usuarioServices.complete}"
+                    <p:outputLabel value="#{msg['field.name']}"/>
+                    <jmoordbjsf:autocomplete converter="#{userConverter}"
+                                             completeMethod="#{userController.userServices.complete}"
                                              labeltip1="#{msg['field.username']} #{p.username}"
-                                             labeltip2="#{msg['field.nombre']} #{p.nombre}" 
-                                             listener="#{usuarioController.handleAutocompleteOfListXhtml}"
-                                             value="#{usuarioController.usuarioSearch}"
-                                             itemLabel=" #{p.nombre}"
-                                             field="nombre"
+                                             labeltip2="#{msg['field.name']} #{p.name}" 
+                                             listener="#{userController.handleAutocompleteOfListXhtml}"
+                                             value="#{userController.userSearch}"
+                                             itemLabel=" #{p.name}"
+                                             field="name"
                                              update=" :form:dataTable"/>
 
 
@@ -59,31 +59,31 @@
             </b:panel>
             <b:panel collapsible="false" id="dataTable" look="primary">
                 <jmoordbjsf:paginator
-                    controller="#{usuarioController}"                        
-                    rowPage="#{usuarioController.rowPage}"                   
-                    page="#{usuarioController.page}"
-                    pages="#{usuarioController.pages}"
-                    skip="ajax:usuarioController.skip()" 
-                    url = "/pages/usuario/new.xhtml"
+                    controller="#{userController}"                        
+                    rowPage="#{userController.rowPage}"                   
+                    page="#{userController.page}"
+                    pages="#{userController.pages}"
+                    skip="ajax:userController.skip()" 
+                    url = "/pages/user/new.xhtml"
 
                     />
-                <b:dataTable value="#{usuarioController.usuarioDataModel}"
+                <b:dataTable value="#{userController.userDataModel}"
                              var="item"
                              id="dataTable2"
                              paginated="false"
                              onpage="console.log('page');">
 
                     <b:dataTableColumn value="#{item.username}" label="#{msg['field.username']}"/>
-                    <b:dataTableColumn value="#{item.nombre}" label="#{msg['field.nombre']}" />
-                    <b:dataTableColumn value="#{item.unidad.idunidad}" label="#{msg['field.unidad']}" />
+                    <b:dataTableColumn value="#{item.name}" label="#{msg['field.name']}" />
+                  
 
 
 
                     <b:dataTableColumn label="" style="width:100px">
                         <p:panelGrid columns="2" styleClass="form-group ui-panelgrid-blank" layout="grid">
 
-                            <p:repeat value="#{item.rol}" var="car">
-                                <p:outputLabel value="#{car.idrol}"/>
+                            <p:repeat value="#{item.profiles}" var="car">
+                                <p:outputLabel value="#{car.idprofile}"/>
                             </p:repeat>
                         </p:panelGrid>
                     </b:dataTableColumn>
@@ -96,10 +96,10 @@
                         
                         <jmoordbjsf:column
 
-                            renderedEdit="#{p:ifGranted('ADMINISTRADOR')}"
-                            renderedDelete="#{p:ifGranted('ADMINISTRADOR')}"
-                            controller="#{usuarioController}"
-                            url="/pages/usuario/view.xhtml"
+                            renderedEdit="#{p:ifGranted('ADMIN')}"
+                            renderedDelete="#{p:ifGranted('ADMIN')}"
+                            controller="#{userController}"
+                            url="/pages/user/view.xhtml"
                             item="#{item}"
 
                             />
@@ -110,6 +110,6 @@
 
         </b:form>
 
-        <jmoordbjsf:denegado rendered="#{!p:ifGranted('ADMINISTRADOR')}" />
+        <jmoordbjsf:denegado rendered="#{!p:ifGranted('ADMIN')}" />
     </ui:define>
 </ui:composition>

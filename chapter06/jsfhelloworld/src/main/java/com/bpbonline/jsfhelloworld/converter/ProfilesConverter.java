@@ -7,8 +7,8 @@ package com.bpbonline.jsfhelloworld.converter;
 
 import com.avbravo.jmoordb.mongodb.history.services.ErrorInfoServices;
 import com.avbravo.jmoordb.util.JmoordbUtil;
-import com.bpbonline.jsfhelloworld.entity.Role;
-import com.bpbonline.jsfhelloworld.repository.RoleRepository;
+import com.bpbonline.jsfhelloworld.entity.Profiles;
+import com.bpbonline.jsfhelloworld.repository.ProfilesRepository;
 import java.util.Optional;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -23,28 +23,28 @@ import javax.inject.Named;
  */
 @Named
 @RequestScoped
-public class RoleConverter implements Converter {
+public class ProfilesConverter implements Converter {
  @Inject
     ErrorInfoServices errorServices;
     @Inject
-    RoleRepository rolRepository;
+    ProfilesRepository profilesRepository;
 
     @Override
     public Object getAsObject(FacesContext facesContext, UIComponent uiComponent, String s) {
-        Role role = new Role();
+        Profiles profilese = new Profiles();
         try{
             if(!s.equals("null")){
-               Role b = new Role();
-               b.setIdrole(s);
-               Optional<Role> optional = rolRepository.findById(b);
+               Profiles b = new Profiles();
+               b.setIdprofile(s);
+               Optional<Profiles> optional = profilesRepository.findById(b);
                if (optional.isPresent()) {
-               role= optional.get();  
+               profilese= optional.get();  
                }   
              }
           } catch (Exception e) {
               errorServices.errorMessage(JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(),e);
           }
-          return role;
+          return profilese;
       }
 
 
@@ -52,9 +52,9 @@ public class RoleConverter implements Converter {
     public String getAsString(FacesContext facesContext, UIComponent uiComponent, Object o) {
         String r = "";
         try {
-            if (o instanceof Role) {
-                Role role = (Role) o;
-                r = String.valueOf(role.getIdrole());
+            if (o instanceof Profiles) {
+                Profiles profilese = (Profiles) o;
+                r = String.valueOf(profilese.getIdprofile());
             }else if (o instanceof String) {
                r = (String) o;
             }

@@ -18,11 +18,12 @@ import com.avbravo.jmoordbutils.JmoordbResourcesFiles;
 import com.avbravo.jmoordbutils.ReportUtils;
 
 import com.bpbonline.jsfhelloworld.datamodel.UsuarioDataModel;
-import com.bpbonline.jsfhelloworld.entity.Rol;
+import com.bpbonline.jsfhelloworld.entity.Profiles;
+
 import com.bpbonline.jsfhelloworld.entity.User;
-import com.bpbonline.jsfhelloworld.repository.RoleRepository;
+import com.bpbonline.jsfhelloworld.repository.ProfilesRepository;
 import com.bpbonline.jsfhelloworld.repository.UserRepository;
-import com.bpbonline.jsfhelloworld.services.RolServices;
+import com.bpbonline.jsfhelloworld.services.ProfilesServices;
 import com.bpbonline.jsfhelloworld.services.UsuarioServices;
 import com.lowagie.text.Element;
 import com.lowagie.text.Font;
@@ -57,7 +58,7 @@ import org.primefaces.event.SelectEvent;
 @ViewScoped
 @Getter
 @Setter
-public class UsuarioController implements Serializable, IController {
+public class UserController implements Serializable, IController {
 
 // <editor-fold defaultstate="collapsed" desc="fields">  
     private static final long serialVersionUID = 1L;
@@ -65,29 +66,29 @@ public class UsuarioController implements Serializable, IController {
     private Boolean writable = false;
     private String passwordnewrepeat;
     //DataModel
-    private UsuarioDataModel usuarioDataModel;
+    private UsuarioDataModel userDataModel;
 
     Integer page = 1;
     Integer rowPage = 25;
     List<Integer> pages = new ArrayList<>();
 
     //Entity
-    User usuario = new User();
-    User usuarioSelected;
-    User usuarioSearch = new User();
+    User user = new User();
+    User userSelected;
+    User userSearch = new User();
 
     //List
-    List<User> usuarioList = new ArrayList<>();
-    //Para multiples roles
-    List<Rol> rolList = new ArrayList();
+    List<User> userList = new ArrayList<>();
+    //
+    List<Profiles> profilesList = new ArrayList();
 
     // </editor-fold>  
     // <editor-fold defaultstate="collapsed" desc="repository">
     //Repository
     @Inject
-    RoleRepository rolRepository;
+    ProfilesRepository profileRepository;
     @Inject
-    UserRepository usuarioRepository;
+    UserRepository userRepository;
 
     // </editor-fold>  
     // <editor-fold defaultstate="collapsed" desc="services">
@@ -97,10 +98,10 @@ public class UsuarioController implements Serializable, IController {
     @Inject
     ErrorInfoServices errorServices;
     @Inject
-    RolServices rolServices;
+    ProfilesServices profilesServicesr;
    
     @Inject
-    UsuarioServices usuarioServices;
+    UsuarioServices userServices;
     @Inject
     JmoordbResourcesFiles rf;
     @Inject
@@ -112,12 +113,12 @@ public class UsuarioController implements Serializable, IController {
 // <editor-fold defaultstate="collapsed" desc="getter/setter">
     public List<Integer> getPages() {
 
-        return usuarioRepository.listOfPage(rowPage);
+        return userRepository.listOfPage(rowPage);
     }
 
     // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="constructor">
-    public UsuarioController() {
+    public UserController() {
     }
 
     // </editor-fold>
@@ -127,7 +128,7 @@ public class UsuarioController implements Serializable, IController {
         try {
 
             /*
-            configurar el ambiente del contusuarioler
+            configurar el ambiente del contuserler
              */
             HashMap parameters = new HashMap();
             User jmoordb_user = (User) JmoordbContext.get("jmoordb_user");
@@ -135,15 +136,15 @@ public class UsuarioController implements Serializable, IController {
 
             JmoordbControllerEnvironment jmc = new JmoordbControllerEnvironment.Builder()
                     .withController(this)
-                    .withRepository(usuarioRepository)
-                    .withEntity(usuario)
-                    .withService(usuarioServices)
+                    .withRepository(userRepository)
+                    .withEntity(user)
+                    .withService(userServices)
                     .withNameFieldOfPage("page")
                     .withNameFieldOfRowPage("rowPage")
                     .withTypeKey("primary")
                     .withSearchLowerCase(true)
-                    .withPathReportDetail("/resources/reportes/usuario/details.jasper")
-                    .withPathReportAll("/resources/reportes/usuario/all.jasper")
+                    .withPathReportDetail("/resources/reportes/user/details.jasper")
+                    .withPathReportAll("/resources/reportes/user/all.jasper")
                     .withparameters(parameters)
                     .withResetInSave(true)
                     .withAction("golist")
@@ -153,9 +154,9 @@ public class UsuarioController implements Serializable, IController {
             //En este caso desencriptamos el password
             String action = getAction();
             if (action.equals("view")) {
-                usuario.setPassword(JsfUtil.desencriptar(usuario.getPassword()));
-                rolList = usuario.getRol();
-                usuarioSelected = usuario;
+                user.setPassword(JsfUtil.desencriptar(user.getPassword()));
+                profilesList = user.getProfiles();
+                userSelected = user;
             }
 
         } catch (Exception e) {
@@ -176,41 +177,41 @@ public class UsuarioController implements Serializable, IController {
     public void move(Integer page) {
         try {
             this.page = page;
-            usuarioDataModel = new UsuarioDataModel(usuarioList);
+            userDataModel = new UsuarioDataModel(userList);
             Document doc;
 
             switch (getSearch()) {
                 case "_init":
                 case "_autocomplete":
-                    usuarioList = usuarioRepository.findPagination(page, rowPage);
+                    userList = userRepository.findPagination(page, rowPage);
                     break;
 
                 case "username":
                     if (getValueSearch() != null) {
-                        usuarioSearch.setUsername(getValueSearch().toString());
-                        doc = new Document("username", usuarioSearch.getUsername());
-                        usuarioList = usuarioRepository.findPagination(doc, page, rowPage, new Document("idusuario", -1));
+                        userSearch.setUsername(getValueSearch().toString());
+                        doc = new Document("username", userSearch.getUsername());
+                        userList = userRepository.findPagination(doc, page, rowPage, new Document("username", -1));
                     } else {
-                        usuarioList = usuarioRepository.findPagination(page, rowPage);
+                        userList = userRepository.findPagination(page, rowPage);
                     }
 
                     break;
                 case "activo":
                     if (getValueSearch() != null) {
-                        usuarioSearch.setActivo(getValueSearch().toString());
-                        doc = new Document("activo", usuarioSearch.getActivo());
-                        usuarioList = usuarioRepository.findPagination(doc, page, rowPage, new Document("idusuario", -1));
+                        userSearch.setActive(getValueSearch().toString());
+                        doc = new Document("activo", userSearch.getActive());
+                        userList = userRepository.findPagination(doc, page, rowPage, new Document("username", -1));
                     } else {
-                        usuarioList = usuarioRepository.findPagination(page, rowPage);
+                        userList = userRepository.findPagination(page, rowPage);
                     }
                     break;
 
                 default:
-                    usuarioList = usuarioRepository.findPagination(page, rowPage);
+                    userList = userRepository.findPagination(page, rowPage);
                     break;
             }
 
-            usuarioDataModel = new UsuarioDataModel(usuarioList);
+            userDataModel = new UsuarioDataModel(userList);
 
         } catch (Exception e) {
             errorServices.errorMessage(nameOfClass(), nameOfMethod(), e.getLocalizedMessage(), e);
@@ -223,13 +224,13 @@ public class UsuarioController implements Serializable, IController {
     public Boolean beforeSave() {
         try {
             //password nuevo no coincide
-            if (!usuario.getPassword().equals(passwordnewrepeat)) {
+            if (!user.getPassword().equals(passwordnewrepeat)) {
                 JsfUtil.warningMessage(rf.getMessage("warning.passwordnocoinciden"));
                 return false;
             }
 
-            usuario.setRol(rolList);
-            usuario.setPassword(JsfUtil.encriptar(usuario.getPassword()));
+            user.setProfiles(profilesList);
+            user.setPassword(JsfUtil.encriptar(user.getPassword()));
             return true;
         } catch (Exception e) {
             errorServices.errorMessage(nameOfClass(), nameOfMethod(), e.getLocalizedMessage(), e);
@@ -241,8 +242,8 @@ public class UsuarioController implements Serializable, IController {
     // <editor-fold defaultstate="collapsed" desc="Boolean beforeEdit()">
     public Boolean beforeEdit() {
         try {
-            usuario.setRol(rolList);
-            usuario.setPassword(JsfUtil.encriptar(usuario.getPassword()));
+            user.setProfiles(profilesList);
+            user.setPassword(JsfUtil.encriptar(user.getPassword()));
             return true;
         } catch (Exception e) {
             errorServices.errorMessage(nameOfClass(), nameOfMethod(), e.getLocalizedMessage(), e);
@@ -254,7 +255,7 @@ public class UsuarioController implements Serializable, IController {
     // <editor-fold defaultstate="collapsed" desc="Boolean beforeDelete()">
     @Override
     public Boolean beforeDelete() {
-        Boolean delete = usuarioServices.isDeleted(usuario);
+        Boolean delete = userServices.isDeleted(user);
         if (!delete) {
             JsfUtil.warningDialog(rf.getMessage("warning.advertencia"), rf.getMessage("warning.nosepuedeeliminar"));
         }
@@ -265,7 +266,7 @@ public class UsuarioController implements Serializable, IController {
     // <editor-fold defaultstate="collapsed" desc="Boolean beforeDeleteFromListXhtml()">
     @Override
     public Boolean beforeDeleteFromListXhtml() {
-        Boolean delete = usuarioServices.isDeleted(usuario);
+        Boolean delete = userServices.isDeleted(user);
         if (!delete) {
             JsfUtil.warningDialog(rf.getMessage("warning.advertencia"), rf.getMessage("warning.nosepuedeeliminar"));
         }
@@ -280,26 +281,26 @@ public class UsuarioController implements Serializable, IController {
      * @param query
      * @return
      */
-    public List<Rol> completeFiltrado(String query) {
-        List<Rol> suggestions = new ArrayList<>();
-        List<Rol> temp = new ArrayList<>();
+    public List<Profiles> completeFiltrado(String query) {
+        List<Profiles> suggestions = new ArrayList<>();
+        List<Profiles> temp = new ArrayList<>();
         try {
             Boolean found = false;
             query = query.trim();
             String field = (String) UIComponent.getCurrentComponent(FacesContext.getCurrentInstance()).getAttributes().get("field");
-            temp = rolRepository.findRegex(field, query, true, new Document(field, 1));
+            temp = profileRepository.findRegex(field, query, true, new Document(field, 1));
 
-            if (rolList.isEmpty()) {
+            if (profilesList.isEmpty()) {
                 if (!temp.isEmpty()) {
                     suggestions = temp;
                 }
             } else {
                 if (!temp.isEmpty()) {
 
-                    for (Rol r : temp) {
+                    for (Profiles r : temp) {
                         found = false;
-                        for (Rol r2 : rolList) {
-                            if (r.getIdrol().equals(r2.getIdrol())) {
+                        for (Profiles r2 : profilesList) {
+                            if (r.getIdprofile().equals(r2.getIdprofile())) {
                                 found = true;
                             }
                         }
@@ -311,7 +312,7 @@ public class UsuarioController implements Serializable, IController {
                 }
 
             }
-            //suggestions=  rolRepository.findRegex(field,query,true,new Document(field,1));
+            //suggestions=  profileRepository.findRegex(field,query,true,new Document(field,1));
 
         } catch (Exception e) {
             errorServices.errorMessage(nameOfClass(), nameOfMethod(), e.getLocalizedMessage(), e);
@@ -332,7 +333,7 @@ public class UsuarioController implements Serializable, IController {
             //METADATA
 
             document.open();
-            document.add(ReportUtils.paragraph("USUARIO", FontFactory.getFont("arial", 12, Font.BOLD), Element.ALIGN_CENTER));
+            document.add(ReportUtils.paragraph("USER", FontFactory.getFont("arial", 12, Font.BOLD), Element.ALIGN_CENTER));
 
             Date currentDate = new Date();
             String texto = "Fecha " + DateUtil.showDate(currentDate);
@@ -344,7 +345,7 @@ public class UsuarioController implements Serializable, IController {
             document.add(new Paragraph("\n"));
 
             //Numero de columnas
-            PdfPTable table = new PdfPTable(4);
+            PdfPTable table = new PdfPTable(3);
 
 //Aqui indicamos el tamaño de cada columna
             table.setTotalWidth(new float[]{140, 140, 140});
@@ -352,18 +353,18 @@ public class UsuarioController implements Serializable, IController {
             table.setLockedWidth(true);
 
             table.addCell(ReportUtils.PdfCell("Username", FontFactory.getFont("arial", 11, Font.BOLD), Element.ALIGN_CENTER));
-            table.addCell(ReportUtils.PdfCell("Nombre", FontFactory.getFont("arial", 11, Font.BOLD), Element.ALIGN_CENTER));
+            table.addCell(ReportUtils.PdfCell("Name", FontFactory.getFont("arial", 11, Font.BOLD), Element.ALIGN_CENTER));
 
-            table.addCell(ReportUtils.PdfCell("Roles", FontFactory.getFont("arial", 11, Font.BOLD), Element.ALIGN_CENTER));
+            table.addCell(ReportUtils.PdfCell("Profiles", FontFactory.getFont("arial", 11, Font.BOLD), Element.ALIGN_CENTER));
 
-            for (User u : usuarioList) {
-                String rol = "";
-                rol = u.getRol().stream().map((r) -> r.getRol() + " ").reduce(rol, String::concat);
+            for (User u : userList) {
+                String profile = "";
+               profile = u.getProfiles().stream().map((r) -> r.getProfile()+ " ").reduce(profile, String::concat);
 
                 table.addCell(ReportUtils.PdfCell(u.getUsername(), FontFactory.getFont("arial", 10, Font.NORMAL)));
-                table.addCell(ReportUtils.PdfCell(u.getNombre(), FontFactory.getFont("arial", 9, Font.NORMAL)));
+                table.addCell(ReportUtils.PdfCell(u.getName(), FontFactory.getFont("arial", 9, Font.NORMAL)));
               
-                table.addCell(ReportUtils.PdfCell(rol, FontFactory.getFont("arial", 10, Font.NORMAL)));
+                table.addCell(ReportUtils.PdfCell(profile, FontFactory.getFont("arial", 10, Font.NORMAL)));
 
             }
             document.add(table);
@@ -392,25 +393,23 @@ public class UsuarioController implements Serializable, IController {
             document.add(ReportUtils.paragraph("USUARIO", FontFactory.getFont("arial", 12, Font.BOLD), Element.ALIGN_CENTER));
 
             Date currentDate = new Date();
-            String texto = "REPORTE";
+            String texto = "REPORT";
             document.add(ReportUtils.paragraph(texto, FontFactory.getFont("arial", 12, Font.BOLD), Element.ALIGN_CENTER));
 
             String date = DateUtil.showDate(currentDate) + " " + DateUtil.showHour(currentDate);
 
-            document.add(ReportUtils.paragraph("Fecha: " + date, FontFactory.getFont("arial", 8, Font.BOLD), Element.ALIGN_RIGHT));
+            document.add(ReportUtils.paragraph("Date: " + date, FontFactory.getFont("arial", 8, Font.BOLD), Element.ALIGN_RIGHT));
             document.add(new Paragraph("\n"));
 
-            document.add(ReportUtils.paragraph("Username: " + usuario.getUsername(), FontFactory.getFont("arial", 12, Font.NORMAL), Element.ALIGN_JUSTIFIED));
-            document.add(ReportUtils.paragraph("Nombre: " + usuario.getNombre(), FontFactory.getFont("arial", 12, Font.NORMAL), Element.ALIGN_JUSTIFIED));
-            document.add(ReportUtils.paragraph("Cedula: " + usuario.getCedula(), FontFactory.getFont("arial", 12, Font.NORMAL), Element.ALIGN_JUSTIFIED));
-            document.add(ReportUtils.paragraph("Email: " + usuario.getEmail(), FontFactory.getFont("arial", 12, Font.NORMAL), Element.ALIGN_JUSTIFIED));
-            document.add(ReportUtils.paragraph("Cargo: " + usuario.getCargo(), FontFactory.getFont("arial", 12, Font.NORMAL), Element.ALIGN_JUSTIFIED));
+            document.add(ReportUtils.paragraph("Username: " + user.getUsername(), FontFactory.getFont("arial", 12, Font.NORMAL), Element.ALIGN_JUSTIFIED));
+            document.add(ReportUtils.paragraph("Name: " + user.getName(), FontFactory.getFont("arial", 12, Font.NORMAL), Element.ALIGN_JUSTIFIED));
+           
             
-            String rol = "";
-            rol = usuario.getRol().stream().map((r) -> r.getRol() + " ").reduce(rol, String::concat);
-            document.add(ReportUtils.paragraph("Rol: " + rol, FontFactory.getFont("arial", 12, Font.NORMAL), Element.ALIGN_JUSTIFIED));
+            String profile = "";
+           profile = user.getProfiles().stream().map((r) -> r.getProfile() + " ").reduce(profile, String::concat);
+            document.add(ReportUtils.paragraph("Profile: " + profile, FontFactory.getFont("arial", 12, Font.NORMAL), Element.ALIGN_JUSTIFIED));
 
-            document.add(ReportUtils.paragraph("Activo: " + usuario.getActivo(), FontFactory.getFont("arial", 12, Font.NORMAL), Element.ALIGN_JUSTIFIED));
+            document.add(ReportUtils.paragraph("Active: " + user.getActive(), FontFactory.getFont("arial", 12, Font.NORMAL), Element.ALIGN_JUSTIFIED));
 
         } catch (Exception e) {
             errorServices.errorMessage(nameOfClass(), nameOfMethod(), e.getLocalizedMessage(), e);

@@ -23,11 +23,11 @@ import com.avbravo.jmoordbutils.JsfUtil;
 import com.avbravo.jmoordbutils.email.ManagerEmail;
 
 import com.avbravo.jmoordbutils.JmoordbResourcesFiles;
-import com.bpbonline.jsfhelloworld.entity.Rol;
+import com.bpbonline.jsfhelloworld.entity.Profiles;
 import com.bpbonline.jsfhelloworld.entity.User;
-import com.bpbonline.jsfhelloworld.repository.RoleRepository;
+import com.bpbonline.jsfhelloworld.repository.ProfilesRepository;
 import com.bpbonline.jsfhelloworld.repository.UserRepository;
-import com.bpbonline.jsfhelloworld.services.RolServices;
+import com.bpbonline.jsfhelloworld.services.ProfilesServices;
 import com.bpbonline.jsfhelloworld.services.UsuarioServices;
 import java.io.Serializable;
 import java.util.HashMap;
@@ -60,7 +60,7 @@ public class LoginController implements Serializable, SecurityInterface {
     @Inject
     private FacesContext facesContext;
 
-    //Atributos para la interface IController
+    //Atributos para la interface IContprofiles ler
     @Inject
     RevisionHistoryRepository revisionHistoryRepository;
     @Inject
@@ -90,9 +90,10 @@ public class LoginController implements Serializable, SecurityInterface {
     Boolean loggedIn = false;
     private String username;
     private String password;
-    private String foto;
+   private String foto;
     private String id;
-    private String key;
+  private String key;
+    
     String usernameSelected;
     Boolean recoverSession = false;
     Boolean userwasLoged = false;
@@ -106,14 +107,14 @@ public class LoginController implements Serializable, SecurityInterface {
     JmoordbNotificationsRepository jmoordbNotificationsRepository;
     @Inject
     UserRepository usuarioRepository;
-    User usuario = new User();
+    User user = new User();
     @Inject
-    RoleRepository rolRepository;
-    Rol rol = new Rol();
+    ProfilesRepository profilesRepository;
+    Profiles  profiles  = new Profiles ();
 
     //Services
     @Inject
-    RolServices rolServices;
+    ProfilesServices profilesServices;
     @Inject
     ErrorInfoServices errorServices;
     @Inject
@@ -123,6 +124,9 @@ public class LoginController implements Serializable, SecurityInterface {
 
     // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="getter/setter">
+    
+    
+    
     public Configuracion getConfiguracion() {
         return configuracion;
     }
@@ -131,20 +135,20 @@ public class LoginController implements Serializable, SecurityInterface {
         this.configuracion = configuracion;
     }
 
-    public RolServices getRolServices() {
-        return rolServices;
+    public ProfilesServices getProfilesServices() {
+        return profilesServices;
     }
 
-    public void setRolServices(RolServices rolServices) {
-        this.rolServices = rolServices;
+    public void setProfilesServices(ProfilesServices profilesServices) {
+        this.profilesServices = profilesServices;
     }
 
-    public Rol getRol() {
-        return rol;
+    public Profiles  getProfiles () {
+        return profiles ;
     }
 
-    public void setRol(Rol rol) {
-        this.rol = rol;
+    public void setProfiles (Profiles  profiles ) {
+        this.profiles  = profiles ;
     }
 
     public String getPasswordold() {
@@ -195,13 +199,15 @@ public class LoginController implements Serializable, SecurityInterface {
         this.key = key;
     }
 
-    public User getUsuario() {
-        return usuario;
+    public User getUser() {
+        return user;
     }
 
-    public void setUsuario(User usuario) {
-        this.usuario = usuario;
+    public void setUser(User user) {
+        this.user = user;
     }
+
+    
 
     public String getUsername() {
         return username;
@@ -306,7 +312,7 @@ public class LoginController implements Serializable, SecurityInterface {
             tokenwassend = false;
             userwasLoged = false;
             loggedIn = true;
-            usuario = new User();
+            user = new User();
             if (username == null || password == null) {
                 JsfUtil.warningMessage(rf.getAppMessage("login.usernamenotvalid"));
                 return null;
@@ -329,8 +335,8 @@ public class LoginController implements Serializable, SecurityInterface {
                     .withUsername(username)
                     .build();
 
-            JmoordbContext.put("jmoordb_user", usuario);
-            JmoordbContext.put("jmoordb_rol", rol);
+            JmoordbContext.put("jmoordb_user", user);
+            JmoordbContext.put("jmoordb_profiles", profiles );
 
 //---Injectarlo en el Session
             switch (continueAuthentication()) {
@@ -344,20 +350,20 @@ public class LoginController implements Serializable, SecurityInterface {
                 case SUCCESS:
                     foto = "img/me.jpg";
                     loggedIn = true;
-                    usuario = (User) JmoordbContext.get("jmoordb_user");
+                    user = (User) JmoordbContext.get("jmoordb_user");
 
                     saveUserInSession(username, 2100);
                     accessInfoRepository.save(accessInfoServices.generateAccessInfo(username, "login", rf.getAppMessage("login.welcome")));
                     loggedIn = true;
-                    JsfUtil.successMessage(rf.getAppMessage("login.welcome") + " " + usuario.getNombre());
+                    JsfUtil.successMessage(rf.getAppMessage("login.welcome") + " " + user.getName());
 
                     //Notificaciones que tiene
                     Document doc = new Document("username", username).append("viewed", "no");
                     Integer count = jmoordbNotificationsRepository.count(doc);
                     JmoordbContext.put("notification_count", count);
 
-                   // validadorRoles.validarRoles(rol.getIdrol());
-                    switch (rol.getIdrol()) {
+                   // validadorProfiles es.validarProfiles es(profiles .getIdprofiles ());
+                    switch (profiles .getIdprofile()) {
                         case "DOCENTE":
                        
              
@@ -365,14 +371,13 @@ public class LoginController implements Serializable, SecurityInterface {
                         case "TEST":
                             return "/faces/pages/index.xhtml?faces-redirect=true";
                         default:
-                           JsfUtil.warningDialog(rf.getAppMessage("warning.view"), rf.getMessage("warning.rolnovalidadoenelmenu"));
+                           JsfUtil.warningDialog(rf.getAppMessage("warning.view"), rf.getMessage("warning.profilesnovalidadoenelmenu"));
                     }
 
                 case NOT_DONE:
             }
 
-            //-----------------------------
-            //              return "/dashboard.xhtml?faces-redirect=true";
+     
         } catch (Exception e) {
             errorServices.errorMessage(JsfUtil.nameOfClass(), JsfUtil.nameOfMethod(), e.getLocalizedMessage(),e);
         }
@@ -395,9 +400,7 @@ public class LoginController implements Serializable, SecurityInterface {
     public String sendToken() {
         try {
 
-//            if(!myemail.equals("emailusuario")){
-//                //no es el email del usuario
-//            }
+
             ManagerEmail managerEmail = new ManagerEmail();
             String token = tokenOfUsername(username);
             if (!token.equals("")) {
@@ -495,7 +498,7 @@ public class LoginController implements Serializable, SecurityInterface {
                 return "";
             }
 
-            if (!passwordold.equals(JsfUtil.desencriptar(usuario.getPassword()))) {
+            if (!passwordold.equals(JsfUtil.desencriptar(user.getPassword()))) {
                 //password anterior no valido
                 JsfUtil.warningMessage(rf.getMessage("warning.passwordanteriornoescorrecto"));
                 return "";
@@ -505,8 +508,8 @@ public class LoginController implements Serializable, SecurityInterface {
                 JsfUtil.warningMessage(rf.getMessage("warning.passwordanteriorigualalnuevo"));
                 return "";
             }
-            usuario.setPassword(JsfUtil.encriptar(passwordnew));
-            usuarioRepository.update(usuario);
+            user.setPassword(JsfUtil.encriptar(passwordnew));
+            usuarioRepository.update(user);
             JsfUtil.successMessage(rf.getAppMessage("info.update"));
         } catch (Exception e) {
             errorServices.errorMessage(JsfUtil.nameOfClass(), JsfUtil.nameOfMethod(), e.getLocalizedMessage(),e);

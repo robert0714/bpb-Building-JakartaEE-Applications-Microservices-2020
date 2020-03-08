@@ -5,7 +5,7 @@
 */
 package com.bpbonline.jsfhelloworld.repository;
 import com.avbravo.jmoordb.mongodb.repository.Repository;
-import com.bpbonline.jsfhelloworld.entity.Role;
+import com.bpbonline.jsfhelloworld.entity.Profiles;
 import javax.ejb.Stateless;
 
 /**
@@ -13,10 +13,10 @@ import javax.ejb.Stateless;
  * @author avbravo
  */
 @Stateless
-public class RoleRepository extends Repository<Role> {
+public class ProfilesRepository extends Repository<Profiles> {
 
-    public RoleRepository(){
-        super(Role.class);
+    public ProfilesRepository(){
+        super(Profiles.class);
     }
    
 
