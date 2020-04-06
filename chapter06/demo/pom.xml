@@ -26,7 +26,7 @@
         <dependency>
             <groupId>org.primefaces</groupId>
             <artifactId>primefaces</artifactId>
-            <version>5.0</version>
+            <version>8.0</version>
         </dependency>
         <dependency>
             <groupId>javax</groupId>
@@ -44,7 +44,7 @@
           <dependency>
             <groupId>com.github.avbravo</groupId>
             <artifactId>jmoordbutils</artifactId>
-            <version>0.57</version>
+            <version>0.84</version>
         </dependency>
     </dependencies>
     
