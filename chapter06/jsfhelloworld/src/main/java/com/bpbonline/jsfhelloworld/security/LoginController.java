@@ -278,7 +278,7 @@ public class LoginController implements Serializable, SecurityInterface {
         //Configuracion de la base de datos
         JmoordbConnection jmc = new JmoordbConnection.Builder()
                 .withSecurity(false)
-                .withDatabase("bpbonline")
+                .withDatabase("jsfdata")
                 .withHost("")
                 .withPort(0)
                 .withUsername("")
