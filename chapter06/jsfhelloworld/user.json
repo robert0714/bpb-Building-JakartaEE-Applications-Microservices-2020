@@ -1,1 +1,0 @@
-{ "_id" : { "$oid" : "5e8d4700bbb26a0d745d890e" }, "username" : "demo", "password" : "3gmNUqygQ/aVZ3HK0qIi1A==", "name" : "Demo User", "userInfo" : [{ "iduserinfo" : "9f8f3db8-3fe8-43be-a372-898c1d99d02a", "username" : "avbravo", "datetime" : { "$date" : 1571756460834 }, "description" : "update" }], "active" : "yes", "profiles" : [{ "idprofile" : "ADMIN" }] }
