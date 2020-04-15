@@ -32,7 +32,6 @@ public class UserDataModel extends ListDataModel<User> implements SelectableData
                 return user;
             }
         }
-
         return null;
     }
 

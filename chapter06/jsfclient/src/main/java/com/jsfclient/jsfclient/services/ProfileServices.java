@@ -5,7 +5,7 @@
  */
 package com.jsfclient.jsfclient.services;
 
-import com.jsfclient.jsfclient.entity.User;
+import com.jsfclient.jsfclient.entity.Profile;
 import com.jsfclient.jsfclient.producer.AuthentificationProducer;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ import javax.ws.rs.core.Response;
  * @author avbravo
  */
 @Stateless
-public class UserServices implements Serializable {
+public class ProfileServices implements Serializable {
 
     private static final String PASS = "pass";
     private static final String FAIL = "fail";
@@ -36,38 +36,38 @@ public class UserServices implements Serializable {
     @Inject
     AuthentificationProducer authentificationProducer;
 
-// <editor-fold defaultstate="collapsed" desc="List<User> findAll()">
-    public List<User> findAll() {
-        List<User> userList = new ArrayList<>();
+// <editor-fold defaultstate="collapsed" desc="List<Profile> findAll()">
+    public List<Profile> findAll() {
+        List<Profile> profileList = new ArrayList<>();
         try {
 
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
-            WebTarget target = client.target("http://localhost:8080" + "/jsfmicroservices/resources/user/findall");
+            WebTarget target = client.target("http://localhost:8080" + "/jsfmicroservices/resources/profile/findall");
 
-            GenericType<List<User>> data = new GenericType<List<User>>() {
+            GenericType<List<Profile>> data = new GenericType<List<Profile>>() {
             };
 
-            userList = target.request(MediaType.APPLICATION_JSON).get(data);
+            profileList = target.request(MediaType.APPLICATION_JSON).get(data);
 
         } catch (Exception e) {
          
             System.out.println("findAll()" + e.getLocalizedMessage());
         }
-        return userList;
+        return profileList;
     }
     // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="Boolean add(User user)">
-    public Boolean add(User user) {
+    // <editor-fold defaultstate="collapsed" desc="Boolean add(Profile profile)">
+    public Boolean add(Profile profile) {
         try {
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             WebTarget webTarget
-                    = client.target("http://localhost:8080" + "/jsfmicroservices/resources/user/add");
+                    = client.target("http://localhost:8080" + "/jsfmicroservices/resources/profile/add");
 
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
-            Response response = invocationBuilder.post(Entity.entity(user, MediaType.APPLICATION_JSON));
+            Response response = invocationBuilder.post(Entity.entity(profile, MediaType.APPLICATION_JSON));
 
             System.out.println(response.getStatus());
             if (response.getStatus() == 400) {
@@ -83,19 +83,19 @@ public class UserServices implements Serializable {
         return false;
     }
 // </editor-fold>
-    // <editor-fold defaultstate="collapsed" desc="Boolean add(User user)">
+    // <editor-fold defaultstate="collapsed" desc="Boolean add(Profile profile)">
 
-    public Boolean uodate(User user) {
+    public Boolean uodate(Profile profile) {
         try {
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             WebTarget webTarget
-                    = client.target("http://localhost:8080" + "/jsfmicroservices/resources/user/update");
+                    = client.target("http://localhost:8080" + "/jsfmicroservices/resources/profile/update");
 
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
-            Response response = invocationBuilder.post(Entity.entity(user, MediaType.APPLICATION_JSON));
+            Response response = invocationBuilder.post(Entity.entity(profile, MediaType.APPLICATION_JSON));
 
-    
+            System.out.println(response.getStatus());
             if (response.getStatus() == 400) {
                 return false;
             }
@@ -110,33 +110,33 @@ public class UserServices implements Serializable {
     }
 // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="User findByUsername(String useraname) ">
+    // <editor-fold defaultstate="collapsed" desc="Profile findByProfilename(String profileaname) ">
     /**
      * consulta por codigo_pedido impresa
      *
      * @param codigo_
      * @return
      */
-    public User findByUsername(String username) {
-        User user= new User();
+    public Profile findByProfilename(String profilename) {
+        Profile profile= new Profile();
         try {
           
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
-            user= client
-                    .target("http://localhost:8080"+ "/jsfmicroservices/resources/user/search/")
-                    .path("/{username}")
-                    .resolveTemplate("username", username)
+            profile= client
+                    .target("http://localhost:8080"+ "/jsfmicroservices/resources/profile/search/")
+                    .path("/{profilename}")
+                    .resolveTemplate("profilename", profilename)
                     .request(MediaType.APPLICATION_JSON)
-                    .get(User.class
+                    .get(Profile.class
                     );
 
             //String result = FAIL;
         } catch (Exception e) {
            
-            System.out.println("findBUsername() " + e.getLocalizedMessage());
+            System.out.println("findBProfilename() " + e.getLocalizedMessage());
         }
-        return user;
+        return profile;
     }
     // </editor-fold>
 
