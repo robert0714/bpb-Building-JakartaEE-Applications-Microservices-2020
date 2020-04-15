@@ -102,7 +102,7 @@ public class ProfileResources {
     // <editor-fold defaultstate="collapsed" desc="@Path("/search/{profilesname}")">
    
     @GET
-    @Path("/search/{profilename}")
+    @Path("/search/{idprofile}")
     @RolesAllowed({"admin"})
     @Produces(MediaType.APPLICATION_JSON)
     public Profile findByIdprofile(@PathParam("idprofile") String idprofile) {
