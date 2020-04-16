@@ -27,27 +27,27 @@
 
                 <jmoordbjsf:messages id="msg"/>
                 <jmoordbjsf:toolbarnew label="#{msg['field.idprofile']}"
-                                       title="#{msg['titleview.profiles']}"
-                                       value="#{profilesController.profiles.idprofile}"
-                                       disabled="#{profilesController.writable}"
+                                       title="#{msg['titleview.profile']}"
+                                       value="#{profileController.profile.idprofile}"
+                                       disabled="#{profileController.writable}"
                                        rendererList="#{p:ifGranted('ADMIN')}"
-                                       controller="#{profilesController}"                                       
-                                       url  = "/pages/profiles/list.xhtml"
+                                       controller="#{profileController}"                                       
+                                       url  = "/pages/profile/list.xhtml"
 
                                        />
-                <b:panel collapsible="false" title="#{app['title.data']}" look="primary" rendered="#{profilesController.writable}">
+                <b:panel collapsible="false" title="#{app['title.data']}" look="primary" rendered="#{profileController.writable}">
 
-                    <b:panelGrid id="panel" colSpans="2,10" size="xs" rendered="#{profilesController.writable}"> 
+                    <b:panelGrid id="panel" colSpans="2,10" size="xs" rendered="#{profileController.writable}"> 
 
                         <p:outputLabel  value="#{msg['field.profile']}" />
-                        <jmoordbjsf:inputText value="#{profilesController.profiles.profile}" id="profile"  label="#{msg['field.profile']}" />
+                        <jmoordbjsf:inputText value="#{profileController.profile.profile}" id="profile"  label="#{msg['field.profile']}" />
 
                         <p:outputLabel  value="#{msg['field.active']}" />
-                        <jmoordbjsf:yesno value="#{profilesController.profiles.active}" id="active"  required="true"/>
+                        <jmoordbjsf:yesno value="#{profileController.profile.active}" id="active"  required="true"/>
 
                         <jmoordbjsf:toolbarsave
                             rendered="#{p:ifGranted('ADMIN')}"
-                            controller="#{profilesController}"   />
+                            controller="#{profileController}"   />
 
                     </b:panelGrid>                    
                 </b:panel>

@@ -5,7 +5,8 @@
 */
 package com.bpbonline.jsfhelloworld.repository;
 import com.avbravo.jmoordb.mongodb.repository.Repository;
-import com.bpbonline.jsfhelloworld.entity.Profiles;
+import com.bpbonline.jsfhelloworld.entity.Profile;
+import com.bpbonline.jsfhelloworld.entity.User;
 import javax.ejb.Stateless;
 
 /**
@@ -13,10 +14,11 @@ import javax.ejb.Stateless;
  * @author avbravo
  */
 @Stateless
-public class ProfilesRepository extends Repository<Profiles> {
+public class ProfileRepository extends Repository<Profile> {
 
-    public ProfilesRepository(){
-        super(Profiles.class);
+    public ProfileRepository(){
+     //   super(Profiles.class);
+         super(Profile.class,"jsfdata","profile");
     }
    
 

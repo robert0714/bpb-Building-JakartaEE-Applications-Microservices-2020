@@ -9,7 +9,7 @@ import com.avbravo.jmoordb.configuration.JmoordbContext;
 import com.avbravo.jmoordbutils.JsfUtil;
 
 import com.avbravo.jmoordbutils.JmoordbResourcesFiles;
-import com.bpbonline.jsfhelloworld.entity.Profiles;
+import com.bpbonline.jsfhelloworld.entity.Profile;
 import com.bpbonline.jsfhelloworld.entity.User;
 import com.bpbonline.jsfhelloworld.repository.UserRepository;
 import java.util.Arrays;
@@ -41,7 +41,7 @@ public class CustomInMemoryIdentityStore implements IdentityStore {
         //Esta adaptado para guardar el GRUPO DEL USUARIO la validacion se hizo en LoginController
         String username = login.getCaller();
         String password = login.getPasswordAsString();
-
+        System.out.println("=====================>> username "+username + "   password "+password   );
         if (!isValidUser(username, password)) {
             return CredentialValidationResult.NOT_VALIDATED_RESULT;
         }
@@ -59,7 +59,7 @@ public class CustomInMemoryIdentityStore implements IdentityStore {
             User user = new User();
             user.setUsername(username);
 
-           Profiles profiles = (Profiles) JmoordbContext.get("jmoordb_profiles");
+           Profile profiles = (Profile) JmoordbContext.get("jmoordb_profiles");
 //Assign the user profile
             this.profileValue = profiles.getIdprofile();
 
@@ -78,6 +78,7 @@ public class CustomInMemoryIdentityStore implements IdentityStore {
                 JmoordbContext.put("jmoordb_user", user);
 
                 if (!JsfUtil.desencriptar(user.getPassword()).equals(password)) {
+        
                     JsfUtil.successMessage(rf.getAppMessage("login.passwordnotvalid"));
                     return false;
                 }
@@ -90,7 +91,7 @@ public class CustomInMemoryIdentityStore implements IdentityStore {
 
                 //Valida los roles del usuario si coincide con el seleccionado
                 Boolean foundprofile = false;
-                for (Profiles p : user.getProfiles()) {
+                for (Profile p : user.getProfile()) {
                     if (profiles.getIdprofile().equals(p.getIdprofile())) {
                         foundprofile = true;
                     }

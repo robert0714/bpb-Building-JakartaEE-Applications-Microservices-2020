@@ -4,11 +4,11 @@ import com.avbravo.jmoordb.anotations.Embedded;
 import com.avbravo.jmoordb.anotations.Id;
 import com.avbravo.jmoordb.anotations.Referenced;
 import com.avbravo.jmoordb.pojos.UserInfo;
+
 import java.util.List;
 import javax.validation.constraints.Size;
 
 public class User {
-
     @Id
     private String username;
     @Size(min = 10, max = 250)
@@ -18,8 +18,8 @@ public class User {
 
     @Referenced(collection = "Profiles",
             field = "idprofile", javatype = "String", lazy = false,
-            repository = "com.bpbonline.jsfhelloworld.repository.ProfilesRepository")
-    private List<Profiles> profiles;
+            repository = "com.bpbonline.jsfhelloworld.repository.ProfileRepository")
+    private List<Profile> profile;
     
     private String active;
 
@@ -30,16 +30,16 @@ public class User {
         
     }
 
-    public User(String username, String password, String name, List<Profiles> profiles, String active, List<UserInfo> userInfo) {
+    public User(String username, String password, String name, List<Profile> profile, String active, List<UserInfo> userInfo) {
         this.username = username;
         this.password = password;
         this.name = name;
-        this.profiles = profiles;
+        this.profile = profile;
         this.active = active;
         this.userInfo = userInfo;
     }
 
-    
+  
     
     
     
@@ -76,14 +76,15 @@ public class User {
         this.name = name;
     }
 
-    public List<Profiles> getProfiles() {
-        return profiles;
+    public List<Profile> getProfile() {
+        return profile;
     }
 
-    public void setProfiles(List<Profiles> profiles) {
-        this.profiles = profiles;
+    public void setProfile(List<Profile> profile) {
+        this.profile = profile;
     }
 
+  
     public List<UserInfo> getUserInfo() {
         return userInfo;
     }

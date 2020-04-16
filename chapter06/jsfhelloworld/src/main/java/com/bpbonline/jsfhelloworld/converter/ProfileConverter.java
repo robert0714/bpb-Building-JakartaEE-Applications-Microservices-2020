@@ -7,8 +7,8 @@ package com.bpbonline.jsfhelloworld.converter;
 
 import com.avbravo.jmoordb.mongodb.history.services.ErrorInfoServices;
 import com.avbravo.jmoordb.util.JmoordbUtil;
-import com.bpbonline.jsfhelloworld.entity.Profiles;
-import com.bpbonline.jsfhelloworld.repository.ProfilesRepository;
+import com.bpbonline.jsfhelloworld.entity.Profile;
+import com.bpbonline.jsfhelloworld.repository.ProfileRepository;
 import java.util.Optional;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -23,20 +23,20 @@ import javax.inject.Named;
  */
 @Named
 @RequestScoped
-public class ProfilesConverter implements Converter {
+public class ProfileConverter implements Converter {
  @Inject
     ErrorInfoServices errorServices;
     @Inject
-    ProfilesRepository profilesRepository;
+    ProfileRepository profilesRepository;
 
     @Override
     public Object getAsObject(FacesContext facesContext, UIComponent uiComponent, String s) {
-        Profiles profilese = new Profiles();
+        Profile profilese = new Profile();
         try{
             if(!s.equals("null")){
-               Profiles b = new Profiles();
+               Profile b = new Profile();
                b.setIdprofile(s);
-               Optional<Profiles> optional = profilesRepository.findById(b);
+               Optional<Profile> optional = profilesRepository.findById(b);
                if (optional.isPresent()) {
                profilese= optional.get();  
                }   
@@ -52,8 +52,8 @@ public class ProfilesConverter implements Converter {
     public String getAsString(FacesContext facesContext, UIComponent uiComponent, Object o) {
         String r = "";
         try {
-            if (o instanceof Profiles) {
-                Profiles profilese = (Profiles) o;
+            if (o instanceof Profile) {
+                Profile profilese = (Profile) o;
                 r = String.valueOf(profilese.getIdprofile());
             }else if (o instanceof String) {
                r = (String) o;

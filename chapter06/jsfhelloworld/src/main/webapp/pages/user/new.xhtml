@@ -57,12 +57,12 @@
                         <p:outputLabel  value="#{msg['field.profile']}" />
 
 
-                        <jmoordbjsf:autocomplete converter="#{profilesConverter}"
+                        <jmoordbjsf:autocomplete converter="#{profileConverter}"
                                                  completeMethod="#{userController.completeFiltrado}"
                                                  labeltip1="#{msg['field.idorofile']} #{p.idprofile}"
                                                  labeltip2="#{msg['field.profile']} #{p.profile}"   
                                                  listener="#{userController.handleSelect}"
-                                                 value="#{userController.profilesList}"
+                                                 value="#{userController.profileList}"
                                                  itemLabel="#{p.idprofile}"
 
                                                  multiple="true"

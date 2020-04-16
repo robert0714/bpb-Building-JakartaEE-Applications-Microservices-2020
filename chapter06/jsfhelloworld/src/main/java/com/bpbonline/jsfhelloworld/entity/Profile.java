@@ -1,12 +1,11 @@
 package com.bpbonline.jsfhelloworld.entity;
 
-import com.avbravo.jmoordb.anotations.Embedded;
-import com.avbravo.jmoordb.anotations.Id;
-import com.avbravo.jmoordb.anotations.Secondary;
 import com.avbravo.jmoordb.pojos.UserInfo;
 import java.util.List;
+import javax.persistence.Embedded;
+import javax.persistence.Id;
 
-public class Profiles {
+public class Profile {
 
     @Id
     private String idprofile;
@@ -15,10 +14,10 @@ public class Profiles {
     @Embedded
     List<UserInfo> userInfo;
 
-    public Profiles() {
+    public Profile() {
     }
 
-    public Profiles(String idprofile, String profile, String active, List<UserInfo> userInfo) {
+    public Profile(String idprofile, String profile, String active, List<UserInfo> userInfo) {
         this.idprofile = idprofile;
         this.profile = profile;
         this.active = active;

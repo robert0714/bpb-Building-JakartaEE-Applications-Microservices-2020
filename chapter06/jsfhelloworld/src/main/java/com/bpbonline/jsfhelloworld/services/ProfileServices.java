@@ -8,8 +8,8 @@ package com.bpbonline.jsfhelloworld.services;
 import com.avbravo.jmoordb.mongodb.history.services.ErrorInfoServices;
 import com.avbravo.jmoordb.util.JmoordbUtil;
 
-import com.bpbonline.jsfhelloworld.entity.Profiles;
-import com.bpbonline.jsfhelloworld.repository.ProfilesRepository;
+import com.bpbonline.jsfhelloworld.entity.Profile;
+import com.bpbonline.jsfhelloworld.repository.ProfileRepository;
 import com.bpbonline.jsfhelloworld.repository.UserRepository;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,19 +25,19 @@ import org.bson.Document;
  * @authoravbravo
  */
 @Stateless
-public class ProfilesServices {
+public class ProfileServices {
 
  @Inject
     ErrorInfoServices errorServices;
     @Inject
-    ProfilesRepository repository;
+    ProfileRepository repository;
 
     @Inject
     UserRepository usuarioRepository;
-    List<Profiles> profilesList = new ArrayList<>();
+    List<Profile> profilesList = new ArrayList<>();
 
-    public List<Profiles> complete(String query) {
-        List<Profiles> suggestions = new ArrayList<>();
+    public List<Profile> complete(String query) {
+        List<Profile> suggestions = new ArrayList<>();
         try {
             suggestions = repository.complete(query);
         } catch (Exception e) {
@@ -47,8 +47,8 @@ public class ProfilesServices {
         return suggestions;
     }
 
-    public List<Profiles> completeFilter(String query) {
-        List<Profiles> suggestions = new ArrayList<>();
+    public List<Profile> completeFilter(String query) {
+        List<Profile> suggestions = new ArrayList<>();
         try {
             query = query.trim();
             if (query.length() < 1) {
@@ -64,7 +64,7 @@ public class ProfilesServices {
     }
 
     // <editor-fold defaultstate="collapsed" desc="List<Profiles> getProfilesList()">
-    public List<Profiles> getProfilesList() {
+    public List<Profile> getProfilesList() {
         try {
           profilesList = repository.findAll(new Document("profile", 1));
         } catch (Exception e) {
@@ -73,12 +73,12 @@ public class ProfilesServices {
         return profilesList;
     }// </editor-fold>
 
-    public void setProfilesList(List<Profiles> profilesList) {
+    public void setProfilesList(List<Profile> profilesList) {
         this.profilesList = profilesList;
     }
 
     // <editor-fold defaultstate="collapsed" desc="Boolean isDeleted(Profiles profiles)">
-    public Boolean isDeleted(Profiles profiles) {
+    public Boolean isDeleted(Profile profiles) {
         Boolean found = false;
         try {
             Document doc = new Document("profiles.idprofiles", profiles.getIdprofile());
@@ -94,12 +94,12 @@ public class ProfilesServices {
     }  // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="findById(String id)">
-    public Profiles findById(String id) {
-        Profiles profiles = new Profiles();
+    public Profile findById(String id) {
+        Profile profiles = new Profile();
         try {
 
             profiles.setIdprofile(id);
-            Optional<Profiles> optional = repository.findById(profiles);
+            Optional<Profile> optional = repository.findById(profiles);
             if (optional.isPresent()) {
                 return optional.get();
             }

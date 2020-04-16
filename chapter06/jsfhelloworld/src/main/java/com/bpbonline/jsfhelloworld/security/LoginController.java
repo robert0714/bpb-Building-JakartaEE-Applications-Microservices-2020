@@ -23,11 +23,11 @@ import com.avbravo.jmoordbutils.JsfUtil;
 import com.avbravo.jmoordbutils.email.ManagerEmail;
 
 import com.avbravo.jmoordbutils.JmoordbResourcesFiles;
-import com.bpbonline.jsfhelloworld.entity.Profiles;
+import com.bpbonline.jsfhelloworld.entity.Profile;
 import com.bpbonline.jsfhelloworld.entity.User;
-import com.bpbonline.jsfhelloworld.repository.ProfilesRepository;
+import com.bpbonline.jsfhelloworld.repository.ProfileRepository;
 import com.bpbonline.jsfhelloworld.repository.UserRepository;
-import com.bpbonline.jsfhelloworld.services.ProfilesServices;
+import com.bpbonline.jsfhelloworld.services.ProfileServices;
 import com.bpbonline.jsfhelloworld.services.UsuarioServices;
 import java.io.Serializable;
 import java.util.HashMap;
@@ -109,12 +109,12 @@ public class LoginController implements Serializable, SecurityInterface {
     UserRepository usuarioRepository;
     User user = new User();
     @Inject
-    ProfilesRepository profilesRepository;
-    Profiles  profiles  = new Profiles ();
+    ProfileRepository profilesRepository;
+    Profile  profiles  = new Profile ();
 
     //Services
     @Inject
-    ProfilesServices profilesServices;
+    ProfileServices profilesServices;
     @Inject
     ErrorInfoServices errorServices;
     @Inject
@@ -135,19 +135,19 @@ public class LoginController implements Serializable, SecurityInterface {
         this.configuracion = configuracion;
     }
 
-    public ProfilesServices getProfilesServices() {
+    public ProfileServices getProfilesServices() {
         return profilesServices;
     }
 
-    public void setProfilesServices(ProfilesServices profilesServices) {
+    public void setProfilesServices(ProfileServices profilesServices) {
         this.profilesServices = profilesServices;
     }
 
-    public Profiles  getProfiles () {
+    public Profile  getProfiles () {
         return profiles ;
     }
 
-    public void setProfiles (Profiles  profiles ) {
+    public void setProfiles (Profile  profiles ) {
         this.profiles  = profiles ;
     }
 
@@ -498,7 +498,8 @@ public class LoginController implements Serializable, SecurityInterface {
                 return "";
             }
 
-            if (!passwordold.equals(JsfUtil.desencriptar(user.getPassword()))) {
+           if (!passwordold.equals(JsfUtil.desencriptar(user.getPassword()))) {
+          
                 //password anterior no valido
                 JsfUtil.warningMessage(rf.getMessage("warning.passwordanteriornoescorrecto"));
                 return "";

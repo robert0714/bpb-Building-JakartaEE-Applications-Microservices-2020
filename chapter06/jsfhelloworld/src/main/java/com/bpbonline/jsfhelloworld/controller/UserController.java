@@ -18,12 +18,12 @@ import com.avbravo.jmoordbutils.JmoordbResourcesFiles;
 import com.avbravo.jmoordbutils.ReportUtils;
 
 import com.bpbonline.jsfhelloworld.datamodel.UsuarioDataModel;
-import com.bpbonline.jsfhelloworld.entity.Profiles;
+import com.bpbonline.jsfhelloworld.entity.Profile;
 
 import com.bpbonline.jsfhelloworld.entity.User;
-import com.bpbonline.jsfhelloworld.repository.ProfilesRepository;
+import com.bpbonline.jsfhelloworld.repository.ProfileRepository;
 import com.bpbonline.jsfhelloworld.repository.UserRepository;
-import com.bpbonline.jsfhelloworld.services.ProfilesServices;
+import com.bpbonline.jsfhelloworld.services.ProfileServices;
 import com.bpbonline.jsfhelloworld.services.UsuarioServices;
 import com.lowagie.text.Element;
 import com.lowagie.text.Font;
@@ -80,13 +80,13 @@ public class UserController implements Serializable, IController {
     //List
     List<User> userList = new ArrayList<>();
     //
-    List<Profiles> profilesList = new ArrayList();
+    List<Profile> profilesList = new ArrayList();
 
     // </editor-fold>  
     // <editor-fold defaultstate="collapsed" desc="repository">
     //Repository
     @Inject
-    ProfilesRepository profileRepository;
+    ProfileRepository profileRepository;
     @Inject
     UserRepository userRepository;
 
@@ -98,7 +98,7 @@ public class UserController implements Serializable, IController {
     @Inject
     ErrorInfoServices errorServices;
     @Inject
-    ProfilesServices profilesServicesr;
+    ProfileServices profilesServicesr;
    
     @Inject
     UsuarioServices userServices;
@@ -155,7 +155,7 @@ public class UserController implements Serializable, IController {
             String action = getAction();
             if (action.equals("view")) {
                 user.setPassword(JsfUtil.desencriptar(user.getPassword()));
-                profilesList = user.getProfiles();
+                profilesList = user.getProfile();
                 userSelected = user;
             }
 
@@ -229,7 +229,7 @@ public class UserController implements Serializable, IController {
                 return false;
             }
 
-            user.setProfiles(profilesList);
+            user.setProfile(profilesList);
             user.setPassword(JsfUtil.encriptar(user.getPassword()));
             return true;
         } catch (Exception e) {
@@ -242,7 +242,7 @@ public class UserController implements Serializable, IController {
     // <editor-fold defaultstate="collapsed" desc="Boolean beforeEdit()">
     public Boolean beforeEdit() {
         try {
-            user.setProfiles(profilesList);
+            user.setProfile(profilesList);
             user.setPassword(JsfUtil.encriptar(user.getPassword()));
             return true;
         } catch (Exception e) {
@@ -281,9 +281,9 @@ public class UserController implements Serializable, IController {
      * @param query
      * @return
      */
-    public List<Profiles> completeFiltrado(String query) {
-        List<Profiles> suggestions = new ArrayList<>();
-        List<Profiles> temp = new ArrayList<>();
+    public List<Profile> completeFiltrado(String query) {
+        List<Profile> suggestions = new ArrayList<>();
+        List<Profile> temp = new ArrayList<>();
         try {
             Boolean found = false;
             query = query.trim();
@@ -297,9 +297,9 @@ public class UserController implements Serializable, IController {
             } else {
                 if (!temp.isEmpty()) {
 
-                    for (Profiles r : temp) {
+                    for (Profile r : temp) {
                         found = false;
-                        for (Profiles r2 : profilesList) {
+                        for (Profile r2 : profilesList) {
                             if (r.getIdprofile().equals(r2.getIdprofile())) {
                                 found = true;
                             }
@@ -359,7 +359,7 @@ public class UserController implements Serializable, IController {
 
             for (User u : userList) {
                 String profile = "";
-               profile = u.getProfiles().stream().map((r) -> r.getProfile()+ " ").reduce(profile, String::concat);
+               profile = u.getProfile().stream().map((r) -> r.getProfile()+ " ").reduce(profile, String::concat);
 
                 table.addCell(ReportUtils.PdfCell(u.getUsername(), FontFactory.getFont("arial", 10, Font.NORMAL)));
                 table.addCell(ReportUtils.PdfCell(u.getName(), FontFactory.getFont("arial", 9, Font.NORMAL)));
@@ -406,7 +406,7 @@ public class UserController implements Serializable, IController {
            
             
             String profile = "";
-           profile = user.getProfiles().stream().map((r) -> r.getProfile() + " ").reduce(profile, String::concat);
+           profile = user.getProfile().stream().map((r) -> r.getProfile() + " ").reduce(profile, String::concat);
             document.add(ReportUtils.paragraph("Profile: " + profile, FontFactory.getFont("arial", 12, Font.NORMAL), Element.ALIGN_JUSTIFIED));
 
             document.add(ReportUtils.paragraph("Active: " + user.getActive(), FontFactory.getFont("arial", 12, Font.NORMAL), Element.ALIGN_JUSTIFIED));

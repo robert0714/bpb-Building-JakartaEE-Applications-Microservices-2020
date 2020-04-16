@@ -20,12 +20,12 @@ import com.avbravo.jmoordbutils.JmoordbResourcesFiles;
 import com.avbravo.jmoordbutils.JsfUtil;
 import com.avbravo.jmoordbutils.ReportUtils;
 import com.bpbonline.jsfhelloworld.datamodel.ProfilesDataModel;
-import com.bpbonline.jsfhelloworld.entity.Profiles;
+import com.bpbonline.jsfhelloworld.entity.Profile;
 
 
 import com.bpbonline.jsfhelloworld.entity.User;
-import com.bpbonline.jsfhelloworld.repository.ProfilesRepository;
-import com.bpbonline.jsfhelloworld.services.ProfilesServices;
+import com.bpbonline.jsfhelloworld.repository.ProfileRepository;
+import com.bpbonline.jsfhelloworld.services.ProfileServices;
 
 import com.bpbonline.jsfhelloworld.services.UsuarioServices;
 import com.lowagie.text.Element;
@@ -61,7 +61,7 @@ import org.primefaces.event.SelectEvent;
 @ViewScoped
 @Getter
 @Setter
-public class ProfilesController implements Serializable, IController {
+public class ProfileController implements Serializable, IController {
 
 // <editor-fold defaultstate="collapsed" desc="fields">  
     private static final long serialVersionUID = 1L;
@@ -75,18 +75,18 @@ public class ProfilesController implements Serializable, IController {
     List<Integer> pages = new ArrayList<>();
 
     //Entity
-    Profiles profiles = new Profiles();
-   Profiles profilesSelected;
-   Profiles profilesSearch = new Profiles();
+    Profile profiles = new Profile();
+   Profile profilesSelected;
+   Profile profilesSearch = new Profile();
 
     //List
-    List<Profiles> profilesList = new ArrayList<>();
+    List<Profile> profilesList = new ArrayList<>();
 
     // </editor-fold>  
     // <editor-fold defaultstate="collapsed" desc="reposisitory">
     //Repository
     @Inject
-    ProfilesRepository profilesRepository;
+    ProfileRepository profilesRepository;
 
     @Inject
     JmoordbResourcesFiles rf;
@@ -106,7 +106,7 @@ public class ProfilesController implements Serializable, IController {
     @Inject
     ErrorInfoServices errorServices;
     @Inject
-    ProfilesServices profilesServices;
+    ProfileServices profilesServices;
     @Inject
     @Push(channel = "notification")
     private PushContext push;
@@ -122,7 +122,7 @@ public class ProfilesController implements Serializable, IController {
 
     // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="constructor">
-    public ProfilesController() {
+    public ProfileController() {
     }
 
     // </editor-fold>
@@ -313,7 +313,7 @@ public class ProfilesController implements Serializable, IController {
             table.addCell(ReportUtils.PdfCell("Rol", FontFactory.getFont("arial", 11, Font.BOLD), Element.ALIGN_CENTER));
             table.addCell(ReportUtils.PdfCell("Activo", FontFactory.getFont("arial", 11, Font.BOLD), Element.ALIGN_CENTER));
 
-            for (Profiles r : profilesList) {
+            for (Profile r : profilesList) {
 
                 table.addCell(ReportUtils.PdfCell(r.getIdprofile(), FontFactory.getFont("arial", 10, Font.NORMAL)));
                 table.addCell(ReportUtils.PdfCell(r.getProfile(), FontFactory.getFont("arial", 9, Font.NORMAL)));

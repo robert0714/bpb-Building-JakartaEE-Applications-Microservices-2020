@@ -25,25 +25,25 @@
             <h:panelGroup id="content" layout="block"> 
 
                 <jmoordbjsf:messages id="msg"/>
-                <b:panel collapsible="false" title="#{msg['titleview.profiles']}"  look="primary">
-                    <b:panelGrid id="panel" colSpans="2,10" size="xs" rendered="#{profilesController.writable}"> 
+                <b:panel collapsible="false" title="#{msg['titleview.profile']}"  look="primary">
+                    <b:panelGrid id="panel" colSpans="2,10" size="xs" rendered="#{profileController.writable}"> 
 
                         <p:outputLabel  value="#{msg['field.idprofile']}" />
-                        <p:outputLabel value="#{profilesController.profiles.idprofile}" id="idprofile"  />
+                        <p:outputLabel value="#{profileController.profile.idprofile}" id="idprofile"  />
 
                         <p:outputLabel  value="#{msg['field.profile']}" />
-                        <jmoordbjsf:inputText value="#{profilesController.profiles.profile}"  id="profile"  />
+                        <jmoordbjsf:inputText value="#{profileController.profile.profile}"  id="profile"  />
 
                         <p:outputLabel  value="#{msg['field.active']}" />
-                        <jmoordbjsf:yesno value="#{profilesController.profiles.active}" id="active"  required="true"/>
+                        <jmoordbjsf:yesno value="#{profileController.profile.active}" id="active"  required="true"/>
 
                     </b:panelGrid>
                     <jmoordbjsf:toolbarview 
                         renderedDelete="#{p:ifGranted('ADMIN')}"
                         renderedEdit="#{p:ifGranted('ADMIN')}"
                         renderedList="#{p:ifGranted('ADMIN')}"                    
-                        controller="#{profilesController}"                       
-                        url  = "/pages/profiles/list.xhtml"
+                        controller="#{profileController}"                       
+                        url  = "/pages/profile/list.xhtml"
                         />
                 </b:panel>
             </h:panelGroup>
