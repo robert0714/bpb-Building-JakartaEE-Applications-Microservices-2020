@@ -25,7 +25,7 @@ public class AuthentificactionIdentityStore implements IdentityStore {
     public CredentialValidationResult validate(UsernamePasswordCredential usernamePasswordCredential) {
         try {
            
-            System.out.println("====================================validad credenciales");
+     
 
             if (usernamePasswordCredential.compareTo("demo", "demo")) {
                 return new CredentialValidationResult("demo", new HashSet<>(asList("admin", "testing")));

@@ -110,9 +110,11 @@ public class UserResources {
         User user = new User();
         try {
             user.setUsername(username);
+            System.out.println("-===  a buscar user "+username);
             Optional<User> optional = userRepository.findById(user);
-            if (!optional.isPresent()) {
+            if (optional.isPresent()) {
                 user = optional.get();
+                System.out.println("----------------> no lo encontro en Resources...");
             }
         } catch (Exception e) {
             System.out.println("findByUsername() " + e.getLocalizedMessage());
