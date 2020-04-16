@@ -83,9 +83,9 @@ public class ProfileServices implements Serializable {
         return false;
     }
 // </editor-fold>
-    // <editor-fold defaultstate="collapsed" desc="Boolean add(Profile profile)">
+    // <editor-fold defaultstate="collapsed" desc="Boolean update(Profile profile)">
 
-    public Boolean uodate(Profile profile) {
+    public Boolean update(Profile profile) {
         try {
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
@@ -117,7 +117,7 @@ public class ProfileServices implements Serializable {
      * @param codigo_
      * @return
      */
-    public Profile findByProfilename(String profilename) {
+    public Profile findByProfilename(String idprofile) {
         Profile profile= new Profile();
         try {
           
@@ -126,7 +126,7 @@ public class ProfileServices implements Serializable {
             profile= client
                     .target("http://localhost:8080"+ "/jsfmicroservices/resources/profile/search/")
                     .path("/{profilename}")
-                    .resolveTemplate("profilename", profilename)
+                    .resolveTemplate("profilename", idprofile)
                     .request(MediaType.APPLICATION_JSON)
                     .get(Profile.class
                     );

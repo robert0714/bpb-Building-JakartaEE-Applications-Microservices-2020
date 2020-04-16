@@ -83,7 +83,7 @@ public class UserServices implements Serializable {
         return false;
     }
 // </editor-fold>
-    // <editor-fold defaultstate="collapsed" desc="Boolean add(User user)">
+    // <editor-fold defaultstate="collapsed" desc="Boolean update(User user)">
 
     public Boolean uodate(User user) {
         try {

@@ -2,22 +2,47 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:jmoordbjsf="http://jmoordbjsf.com/taglib"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>JsfClient</title>
+
+           <f:facet name="first">
+            <f:view locale="#{jmoordbLanguajes.locale !=null?jmoordbLanguajes.locale:'es'}"></f:view>
+            <f:loadBundle basename="com.properties.messages" var="msg" />
+            <f:loadBundle basename="com.jmoordbutils.properties.application" var="app" />
+
+        </f:facet>
+         <title>#{msg['application.shorttitle']}</title>
     </h:head>
     <h:body>
+        <h:form id="form" prependId="false">
+            <p:growl id="growl"/>
         <p:panel header="User" >
+             <jmoordbjsf:login
+                    id="username"
+                    fieldusername="#{userController.username}"
+                    labelusername="#{app['login.username']}"
+                    fieldpassword="#{userController.password}"
+                    dologin="#{userController.login()}"
+                    showone="false"
+                    idone="rol"
+                   
+                    />
+
+
+            
+            
             <p:dataTable value="#{userController.userList}"
                          var="item"                         
                          >
-                <p:column  headerText="Username">
+                <p:column  headerText="#{msg['field.username']}">
                     <p:outputLabel value="#{item.username}"/>                   
                 </p:column>            
-                <p:column  headerText="Name">
+                <p:column  headerText="#{msg['field.name']}">
                     <p:outputLabel value="#{item.name}"/>                   
                 </p:column>            
-                <p:column  headerText="Profile">
+                <p:column  headerText="#{msg['field.profile']}">
                 
                          <p:repeat value="#{item.profile}" var="var">
                                 <p:outputLabel value="#{var.profile}"/>
@@ -27,6 +52,8 @@
             </p:dataTable>
             
         </p:panel>
+            
+            </h:form>
     </h:body>
 </html>
 

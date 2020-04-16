@@ -5,6 +5,8 @@
  */
 package com.jsfclient.jsfclient.controller;
 
+import com.avbravo.jmoordbutils.JmoordbResourcesFiles;
+import com.avbravo.jmoordbutils.JsfUtil;
 import com.jsfclient.jsfclient.entity.User;
 import com.jsfclient.jsfclient.services.UserServices;
 import java.io.Serializable;
@@ -27,9 +29,16 @@ import lombok.Setter;
 @Getter
 @Setter
 public class UserController implements Serializable{
+    
+    private String username;
+    private String password;
+    
   private static final long serialVersionUID = 1L;
     @Inject
     UserServices userServices;
+     @Inject
+    JmoordbResourcesFiles rf;
+     User user = new User();
     
     List<User> userList = new ArrayList<>();
     /**
@@ -40,10 +49,29 @@ public class UserController implements Serializable{
     
       @PostConstruct
     public void init() {
+          
+
         userList = userServices.findAll();
-        for(User u:userList){
-            System.out.println("---> "+u.getName() + " profile "+u.getProfile().get(0));
+        
+    }
+    
+    public String login(){
+        try {
+            JsfUtil.successMessage(rf.getAppMessage("login.welcome") );
+            User user= userServices.findByUsername(username);
+            
+             if (user== null || user.getUsername() == null) {
+                JsfUtil.warningMessage(rf.getAppMessage("login.usernamenotvalid"));
+                return "";
+            } else {
+
+
+                JsfUtil.infoDialog("Welcome ", "user "+user.getName());
+             }
+        } catch (Exception e) {
+            JsfUtil.errorDialog("login()", e.getLocalizedMessage());
         }
+        return "";
     }
     
 }
