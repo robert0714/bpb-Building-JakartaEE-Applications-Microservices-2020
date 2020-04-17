@@ -78,14 +78,14 @@ public class UserServices implements Serializable {
             return true;
         } catch (Exception e) {
            
-            System.out.println("errort" + e.getLocalizedMessage());
+            System.out.println("error" + e.getLocalizedMessage());
         }
         return false;
     }
 // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Boolean update(User user)">
 
-    public Boolean uodate(User user) {
+    public Boolean update(User user) {
         try {
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
@@ -104,13 +104,13 @@ public class UserServices implements Serializable {
             return true;
         } catch (Exception e) {
           
-            System.out.println("errort" + e.getLocalizedMessage());
+            System.out.println("error" + e.getLocalizedMessage());
         }
         return false;
     }
 // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="User findByUsername(String useraname) ">
+    // <editor-fold defaultstate="collapsed" desc="User findByUsername(String username) ">
     /**
      * consulta por codigo_pedido impresa
      *
