@@ -35,6 +35,8 @@
                                        url  = "/pages/profile/list.xhtml"
 
                                        />
+                
+                <p:outputLabel value="Writable= #{profileController.writable}"/>
                 <b:panel collapsible="false" title="#{app['title.data']}" look="primary" rendered="#{profileController.writable}">
 
                     <b:panelGrid id="panel" colSpans="2,10" size="xs" rendered="#{profileController.writable}"> 
