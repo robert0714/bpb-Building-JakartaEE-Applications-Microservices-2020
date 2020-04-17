@@ -19,7 +19,6 @@ public class UserRepository extends Repository<User> {
 
        public UserRepository(){
         super(User.class,"jsfdata","user");
-//        super(User.class);
     }
    
 

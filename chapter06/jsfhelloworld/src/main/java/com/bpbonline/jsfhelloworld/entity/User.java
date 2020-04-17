@@ -16,7 +16,7 @@ public class User {
     @Size(min = 8, max = 250)
     private String name;
 
-    @Referenced(collection = "Profiles",
+    @Referenced(collection = "Profile",
             field = "idprofile", javatype = "String", lazy = false,
             repository = "com.bpbonline.jsfhelloworld.repository.ProfileRepository")
     private List<Profile> profile;
