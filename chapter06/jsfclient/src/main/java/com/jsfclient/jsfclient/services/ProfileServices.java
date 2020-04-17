@@ -5,6 +5,7 @@
  */
 package com.jsfclient.jsfclient.services;
 
+import com.avbravo.jmoordbutils.JsfUtil;
 import com.jsfclient.jsfclient.entity.Profile;
 import com.jsfclient.jsfclient.producer.AuthentificationProducer;
 import java.io.Serializable;
@@ -139,5 +140,32 @@ public class ProfileServices implements Serializable {
         return profile;
     }
     // </editor-fold>
+    
+    
+    
+      // <editor-fold defaultstate="collapsed" desc="List<Profile> complete( String query)">
+    public List<Profile> complete(String query) {
+        List<Profile> suggestions = new ArrayList<>();
+        try {
+      
+             Client client = ClientBuilder.newClient();
+            client.register(authentificationProducer.httpAuthenticationFeature());
+            suggestions = client
+                     .target("http://localhost:8080"+ "/jsfmicroservices/resources/profile/autocomplete/")
+                    .path("/{query}")
+                    .resolveTemplate("query", query)
+                    .request(MediaType.APPLICATION_JSON)
+                    .get(new GenericType<List<Profile>>() {
+                    });
+
+        } catch (Exception e) {
+          
+            System.out.println("complete() " + e.getLocalizedMessage());
+        }
+
+        return suggestions;
+    }
+    // </editor-fold>
+
 
 }

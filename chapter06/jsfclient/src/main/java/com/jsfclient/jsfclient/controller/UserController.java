@@ -7,7 +7,9 @@ package com.jsfclient.jsfclient.controller;
 
 import com.avbravo.jmoordbutils.JmoordbResourcesFiles;
 import com.avbravo.jmoordbutils.JsfUtil;
+import com.jsfclient.jsfclient.entity.Profile;
 import com.jsfclient.jsfclient.entity.User;
+import com.jsfclient.jsfclient.services.ProfileServices;
 import com.jsfclient.jsfclient.services.UserServices;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -19,6 +21,7 @@ import javax.inject.Inject;
 import lombok.Getter;
 
 import lombok.Setter;
+import org.primefaces.event.SelectEvent;
 
 /**
  *
@@ -36,6 +39,9 @@ public class UserController implements Serializable{
   private static final long serialVersionUID = 1L;
     @Inject
     UserServices userServices;
+    @Inject
+    ProfileServices profileServices;
+    Profile profileSearch = new Profile();
      @Inject
     JmoordbResourcesFiles rf;
      User user = new User();
@@ -74,4 +80,14 @@ public class UserController implements Serializable{
         return "";
     }
     
+    
+    String handleAutocompleteOfListXhtml(SelectEvent event) {
+        
+       try {
+          JsfUtil.infoDialog("Selected", profileSearch.getProfile());
+        } catch (Exception e) {
+            JsfUtil.errorDialog("login()", e.getLocalizedMessage());
+        }
+        return "";
+    }
 }

@@ -52,7 +52,22 @@
             </p:dataTable>
             
         </p:panel>
-            
+            <p:panel header="Autocomplete" >
+                
+                       <jmoordbjsf:autocomplete converter="#{profileConverter}"
+                                             completeMethod="#{userController.profileServices.complete}"
+                                             labeltip1="#{msg['field.idprofile']} #{p.idprofile}"
+                                             labeltip2="#{msg['field.profile']} #{p.profile}"
+                                             listener="#{userController.handleAutocompleteOfListXhtml}"
+                                             value="#{userController.profileSearch}"
+                                             itemLabel="#{p.idprofile}"
+                                             field="idprofile"
+                                             dropdown="true"
+                                             minQueryLength="0"
+                                             update=":form"/>
+
+                
+            </p:panel>
             </h:form>
     </h:body>
 </html>
