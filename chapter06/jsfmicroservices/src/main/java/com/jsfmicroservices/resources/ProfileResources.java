@@ -5,13 +5,16 @@
  */
 package com.jsfmicroservices.resources;
 
+import com.avbravo.jmoordb.util.JmoordbUtil;
 import com.jsfmicroservices.entity.Profile;
 import com.jsfmicroservices.repository.ProfileRepository;
-
+import java.util.ArrayList;
 
 import java.util.List;
 import java.util.Optional;
 import javax.annotation.security.RolesAllowed;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -22,12 +25,12 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import org.bson.Document;
 
 /**
  *
  * @author avbravo
  */
-
 @Path("profile")
 public class ProfileResources {
 
@@ -100,7 +103,6 @@ public class ProfileResources {
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="@Path("/search/{profilesname}")">
-   
     @GET
     @Path("/search/{idprofile}")
     @RolesAllowed({"admin"})
@@ -121,4 +123,19 @@ public class ProfileResources {
     }
 // </editor-fold>
 
+    @GET
+    @Path("/autocomplete/{query}")
+    @RolesAllowed({"admin"})
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Profile> complete(@PathParam("query") String query) {
+        List<Profile> suggestions = new ArrayList<>();
+        try {
+            query = query.trim();
+            suggestions = profileRepository.findRegex("profile", query, true, new Document("profile", 1));
+       
+        } catch (Exception e) {
+            System.out.println("complete() " + e.getLocalizedMessage());
+        }
+        return suggestions;
+    }
 }
