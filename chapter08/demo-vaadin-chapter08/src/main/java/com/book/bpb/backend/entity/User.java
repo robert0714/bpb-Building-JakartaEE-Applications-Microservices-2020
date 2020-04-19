@@ -12,20 +12,13 @@ public class User {
 
     @XmlElement(name = "_idUser")
     private String idUser;
-
     private String firstName;
-
     private String lastName;
-
     @Email
     private String contactEmail;
-
     private String password;
-
     private Boolean blocked;
-
     private String country;
-
     private Role mainRole;
 
     public String getIdUser() {
