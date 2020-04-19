@@ -33,8 +33,8 @@ public class ExampleGrid extends VerticalLayout{
 
         List<Person> personList = new ArrayList<>();
         personList.add(new Person(100, "Aristides", "Villareal", 40,"128-952-267"));
-        personList.add(new Person(101, "Octavio", "Goncalves", 28,"942-227-127"));
         personList.add(new Person(102, "Geovanny", "Mendoza", 23,"237-265-337"));
+        personList.add(new Person(101, "Octavio", "Goncalves", 28,"942-227-123"));
         Grid<Person> grid = new Grid<>(Person.class);
         grid.setItems(personList);
         grid.removeColumnByKey("idPerson");
