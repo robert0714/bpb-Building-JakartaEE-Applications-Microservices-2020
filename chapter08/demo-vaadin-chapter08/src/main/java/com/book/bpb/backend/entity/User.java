@@ -1,17 +1,19 @@
 package com.book.bpb.backend.entity;
 
-import javax.validation.constraints.Email;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import com.avbravo.jmoordb.anotations.Embedded;
+import com.avbravo.jmoordb.anotations.Id;
+import com.avbravo.jmoordb.anotations.Secondary;
+import com.avbravo.jmoordb.pojos.UserInfo;
 
-@XmlRootElement
-@XmlAccessorType(XmlAccessType.FIELD)
+import javax.validation.constraints.Email;
+import java.util.List;
+
+
 public class User {
 
-    @XmlElement(name = "_idUser")
+    @Id
     private String idUser;
+    @Secondary
     private String firstName;
     private String lastName;
     @Email
@@ -20,6 +22,19 @@ public class User {
     private Boolean blocked;
     private String country;
     private Role mainRole;
+
+    public User(){}
+
+    public User(String idUser, String firstName, String lastName, @Email String contactEmail, String password, Boolean blocked, String country, Role mainRole) {
+        this.idUser = idUser;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.contactEmail = contactEmail;
+        this.password = password;
+        this.blocked = blocked;
+        this.country = country;
+        this.mainRole = mainRole;
+    }
 
     public String getIdUser() {
         return idUser;
