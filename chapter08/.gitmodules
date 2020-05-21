@@ -1,0 +1,3 @@
+[submodule "chapter08/chapter08/demo-vaadin-chapter08"]
+	path = chapter08/chapter08/demo-vaadin-chapter08
+	url = https://github.com/Geovanny0401/Building-JakartaEE-Applications-Microservices.git

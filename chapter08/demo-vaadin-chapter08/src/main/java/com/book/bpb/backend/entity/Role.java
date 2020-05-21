@@ -1,20 +1,28 @@
 package com.book.bpb.backend.entity;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlType;
+import com.avbravo.jmoordb.anotations.Embedded;
+import com.avbravo.jmoordb.anotations.Id;
+import com.avbravo.jmoordb.anotations.Secondary;
+import com.avbravo.jmoordb.pojos.UserInfo;
+import java.util.List;
 
-
-@XmlType(name = "roles")
-@XmlAccessorType(XmlAccessType.FIELD)
 public class Role {
 
-    @XmlElement(name = "_idRole")
+    @Id
     private String idRole;
+    @Secondary
     private String name;
     private Boolean authorizedModule1;
     private Boolean accessModule2;
+
+    public Role(){}
+
+    public Role(String idRole, String name, Boolean authorizedModule1, Boolean accessModule2) {
+        this.idRole = idRole;
+        this.name = name;
+        this.authorizedModule1 = authorizedModule1;
+        this.accessModule2 = accessModule2;
+    }
 
     public String getIdRole() {
         return idRole;
