@@ -15,8 +15,8 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testcontainers.containers.BrowserWebDriverContainer;
 
 public class AppControllerTest {
+    String url = "http://192.168.0.3:8080/krazosguide";
 
-    String url = "http://192.168.0.5:8080/krazosguide";
  
   
 
@@ -24,6 +24,9 @@ public class AppControllerTest {
     public BrowserWebDriverContainer chrome
             = new BrowserWebDriverContainer()
                     .withCapabilities(new ChromeOptions());
+    
+    
+ 
 
     @Test
     public void viewTest() {
@@ -33,6 +36,7 @@ public class AppControllerTest {
         WebElement element = driver.findElement(By.name("textfield"));
         String resource = element.getAttribute("value");
         assertEquals("view", resource);
+
         driver.close();
     }
 
