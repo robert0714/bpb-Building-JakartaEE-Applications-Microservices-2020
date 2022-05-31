@@ -18,7 +18,7 @@
         <version.concurrencyUtilities>1.0</version.concurrencyUtilities>
         <version.jca>1.7</version.jca>
         <version.jbatch>1.0.1</version.jbatch>
-        <version.payara>5.192</version.payara>
+        <version.payara>5.2022.2</version.payara>
         <version.microprofile>2.2</version.microprofile>
     </properties>
     
@@ -71,7 +71,7 @@
             <plugin>
                 <groupId>fish.payara.maven.plugins</groupId>
                 <artifactId>payara-micro-maven-plugin</artifactId>
-                <version>1.0.4</version>
+                <version>1.0.7</version>
                 <configuration>
                     <payaraVersion>${version.payara}</payaraVersion>
                     <deployWar>false</deployWar>
@@ -87,6 +87,14 @@
                     <contextRoot>""</contextRoot>
                 </configuration>
             </plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>3.3.2</version>
+				<configuration>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+				</configuration>
+			</plugin>
         </plugins>
     </build>
     <repositories>

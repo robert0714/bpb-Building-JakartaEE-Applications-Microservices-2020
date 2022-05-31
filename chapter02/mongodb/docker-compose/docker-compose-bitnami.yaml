@@ -1,0 +1,15 @@
+version: '3.1'
+services:
+  mongo:
+    container_name: mongodb
+    image: bitnami/mongodb:4.4.10 
+    # ports:
+    # - "27017:27017"
+    environment:
+    - MONGODB_DATABASE=npm
+    - MONGODB_USERNAME=adminuser
+    - MONGODB_PASSWORD=password123
+    - ALLOW_EMPTY_PASSWORD=yes
+    - TZ=Asia/Taipei
+    network_mode:  "host"
+
