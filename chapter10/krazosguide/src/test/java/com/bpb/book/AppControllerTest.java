@@ -6,6 +6,13 @@ package com.bpb.book;
  * and open the template in the editor.
  */
 import static org.junit.Assert.assertEquals;
+
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.net.SocketException;
+import java.net.UnknownHostException;
+
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -15,10 +22,26 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testcontainers.containers.BrowserWebDriverContainer;
 
 public class AppControllerTest {
-    String url = "http://192.168.0.3:8080/krazosguide";
+    String url = "http://192.168.18.30:8080/krazosguide";
 
  
-  
+	public String lookupIpFromGoogle() {
+		try (final DatagramSocket socket = new DatagramSocket()) {
+			socket.connect(InetAddress.getByName("8.8.8.8"), 10002);
+			String ip = socket.getLocalAddress().getHostAddress();
+			return ip;
+		} catch (SocketException | UnknownHostException e) { 
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Before
+	public	void beforeEach() {
+		String ip = lookupIpFromGoogle();
+		System.out.println(ip);
+		this.url = "http://" + ip + ":8080/krazosguide";
+	}
 
     @Rule
     public BrowserWebDriverContainer chrome

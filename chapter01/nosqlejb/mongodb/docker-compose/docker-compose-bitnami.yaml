@@ -6,9 +6,9 @@ services:
     # ports:
     # - "27017:27017"
     environment:
-    - MONGODB_DATABASE=npm
-    - MONGODB_USERNAME=adminuser
-    - MONGODB_PASSWORD=password123
+#    - MONGODB_DATABASE=npm
+#    - MONGODB_USERNAME=adminuser
+#    - MONGODB_PASSWORD=password123
     - ALLOW_EMPTY_PASSWORD=yes
     - TZ=Asia/Taipei
     network_mode:  "host"

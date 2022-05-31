@@ -8,11 +8,11 @@ https://www.payara.fish/downloads/previous-releases/
 * https://blog.payara.fish/using-the-payara-micro-maven-plugin
 * [Start](https://github.com/payara/ecosystem-maven/blob/master/payara-micro-maven-plugin/README.md)
 ```shell
-mvn payara-micro:start
+mvn clean package  -DskipTests=true  -Dmaven.test.skip=true  -Dmaven.main.skip=true    payara-micro:bundle payara-micro:start
 ```
 * [stop](https://github.com/payara/ecosystem-maven/blob/master/payara-micro-maven-plugin/README.md#stop)
 ```shell
-mvn toolchains:toolchain payara-micro:stop
+mvn   payara-micro:stop
 ```
 #### Payara Eclipse IDE Plugin
 * https://docs.payara.fish/community/docs/documentation/ecosystem/eclipse-plugin/README.html
@@ -25,8 +25,8 @@ mvn toolchains:toolchain payara-micro:stop
 * https://wiki.eclipse.org/MicroProfile/Implementation
 
 # Examples
-* [nosqlejb](./nosqlejb/)
-* [myservlet](./myservelt/)  depend on [nosqlejb](./nosqlejb/)  
+* [nosqlejb](./nosqlejb/)   depend on  Mongo DB
+* [myservlet](./myservelt/)  depend on [nosqlejb](./nosqlejb/)  , Mongo DB
 ```shell
 curl http://localhost:8080/myservelt/Hello
 curl http://localhost:8080/myservelt/PersonServlet

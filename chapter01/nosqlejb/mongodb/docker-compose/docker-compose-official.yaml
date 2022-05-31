@@ -8,8 +8,8 @@ services:
     volumes:
     - $PWD/data/mongodb:/data/db
     environment:
-    - MONGODB_DATABASE=npm
-    - MONGO_INITDB_ROOT_USERNAME=adminuser
-    - MONGO_INITDB_ROOT_PASSWORD=password123
+#    - MONGODB_DATABASE=npm
+#    - MONGO_INITDB_ROOT_USERNAME=adminuser
+#    - MONGO_INITDB_ROOT_PASSWORD=password123
     - TZ=Asia/Taipei
     network_mode:  "host"
